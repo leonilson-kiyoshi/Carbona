@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exemplo de relatório — Dashboard de Carbono | Carbona</title>
+  <meta name="description" content="Exemplo de dashboard de um relatório de carbono da Carbona: emissões por escopo e por fonte, evolução no tempo, balanço com a fixação de carbono e recomendações priorizadas de redução." />
+  <meta name="theme-color" content="#2E7D32" />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/png" href="Generatedimage_1789424126672.png" />
+
+  <style>
+    :root {
+      --verde: #2e7d32; --verde-escuro: #1b5e20; --verde-claro: #e8f2e9;
+      --azul: #1565c0; --azul-claro: #e7f0fb;
+      --amarelo: #f9a825; --amarelo-claro: #fef3d8;
+      --teal: #0f9d78; --teal-escuro: #0b7a5e; --teal-claro: #e2f6f0;
+      --branco: #fff; --texto: #1a1a1a; --cinza: #555; --cinza-claro: #f5f7f5;
+      --borda: #e2e8e2;
+      --raio: 14px; --raio-sm: 9px;
+      --sombra-sm: 0 1px 2px rgba(16,24,16,.06), 0 1px 3px rgba(16,24,16,.08);
+      --sombra: 0 4px 6px rgba(16,24,16,.05), 0 10px 24px rgba(16,24,16,.07);
+      --sombra-lg: 0 12px 32px rgba(16,24,16,.12);
+      --largura-max: 1180px; --altura-nav: 64px;
+      --fonte: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    *,*::before,*::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin:0; font-family:var(--fonte); color:var(--texto); background:var(--cinza-claro); line-height:1.6; font-size:16px; -webkit-font-smoothing:antialiased; }
+    h1,h2,h3,h4 { line-height:1.18; font-weight:800; letter-spacing:-.02em; margin:0 0 .4em; }
+    p { margin:0 0 1em; color:var(--cinza); }
+    a { color:var(--verde); text-decoration:none; }
+    img,svg { display:block; max-width:100%; }
+    ul { margin:0; padding:0; list-style:none; }
+    :focus-visible { outline:3px solid var(--azul); outline-offset:2px; border-radius:4px; }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    .container { width:100%; max-width:var(--largura-max); margin:0 auto; padding:0 24px; }
+
+    /* Topbar */
+    .topbar { position:sticky; top:0; z-index:100; height:var(--altura-nav); background:rgba(255,255,255,.94); backdrop-filter:saturate(180%) blur(10px); border-bottom:1px solid var(--borda); }
+    .topbar .container { height:100%; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .marca { display:inline-flex; align-items:center; gap:10px; font-weight:800; font-size:1.1rem; color:var(--texto); }
+    .marca .emblema { width:38px; height:38px; flex:none; }
+    .marca b { color:var(--verde); }
+    .topbar-acoes { display:flex; align-items:center; gap:10px; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; font-family:inherit; font-size:.95rem; font-weight:700; line-height:1; padding:11px 16px; border-radius:var(--raio-sm); border:2px solid transparent; cursor:pointer; transition:transform .12s ease, background .2s ease, box-shadow .2s ease, border-color .2s ease; white-space:nowrap; }
+    .btn:active { transform:translateY(1px); }
+    .btn-primario { background:var(--verde); color:#fff; box-shadow:var(--sombra-sm); }
+    .btn-primario:hover { background:var(--verde-escuro); box-shadow:var(--sombra); }
+    .btn-contorno { background:transparent; color:var(--verde-escuro); border-color:var(--borda); }
+    .btn-contorno:hover { border-color:var(--verde); background:var(--verde-claro); }
+    .link-voltar { font-weight:700; font-size:.92rem; color:var(--cinza); display:inline-flex; align-items:center; gap:7px; }
+    .link-voltar:hover { color:var(--verde-escuro); }
+
+    /* Banner do relatório */
+    .relatorio-topo { padding:34px 0 8px; }
+    .aviso-exemplo { display:inline-flex; align-items:center; gap:8px; font-size:.8rem; font-weight:800; text-transform:uppercase; letter-spacing:.05em; color:#7a5300; background:var(--amarelo-claro); border:1px solid #f3d38a; padding:6px 13px; border-radius:999px; margin-bottom:16px; }
+    .relatorio-cabecalho { display:flex; justify-content:space-between; align-items:flex-end; gap:20px; flex-wrap:wrap; }
+    .relatorio-cabecalho h1 { font-size:clamp(1.6rem,3.6vw,2.3rem); margin:0; }
+    .relatorio-cabecalho .meta { color:var(--cinza); font-weight:600; margin:6px 0 0; }
+    .cobertura { display:inline-flex; align-items:center; gap:9px; background:var(--verde-claro); color:var(--verde-escuro); font-weight:700; font-size:.9rem; padding:9px 15px; border-radius:999px; border:1px solid #bcdfc0; }
+    .cobertura .bolinha { width:9px; height:9px; border-radius:50%; background:var(--verde); }
+
+    main { padding:26px 0 10px; }
+    .bloco { margin-bottom:26px; }
+    .painel { background:#fff; border:1px solid var(--borda); border-radius:var(--raio); box-shadow:var(--sombra-sm); padding:24px; }
+    .painel-titulo { font-size:.82rem; font-weight:800; text-transform:uppercase; letter-spacing:.08em; color:var(--cinza); margin:0 0 4px; }
+    .painel-sub { font-size:.9rem; color:var(--cinza); margin:0 0 18px; }
+
+    /* KPIs */
+    .kpis { display:grid; grid-template-columns:repeat(5,1fr); gap:16px; }
+    .kpi { background:#fff; border:1px solid var(--borda); border-radius:var(--raio); box-shadow:var(--sombra-sm); padding:18px 18px 16px; border-top:4px solid var(--verde); }
+    .kpi.azul { border-top-color:var(--azul); } .kpi.amarelo { border-top-color:var(--amarelo); }
+    .kpi.teal { border-top-color:var(--teal); } .kpi.escuro { border-top-color:var(--verde-escuro); }
+    .kpi .rotulo { font-size:.8rem; font-weight:700; color:var(--cinza); text-transform:uppercase; letter-spacing:.04em; margin-bottom:8px; }
+    .kpi .valor { font-size:1.9rem; font-weight:800; color:var(--texto); letter-spacing:-.03em; line-height:1; }
+    .kpi .valor small { font-size:.8rem; font-weight:700; color:var(--cinza); letter-spacing:0; }
+    .kpi .obs { font-size:.82rem; color:var(--cinza); margin-top:7px; }
+    .kpi .obs.baixa { color:var(--verde); font-weight:700; }
+
+    /* Grids de gráficos */
+    .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+    .grid-32 { display:grid; grid-template-columns:1.1fr .9fr; gap:22px; }
+
+    /* Donut */
+    .donut-bloco { display:flex; align-items:center; gap:22px; flex-wrap:wrap; }
+    .donut-svg { width:176px; height:176px; flex:none; }
+    .donut-legenda { display:grid; gap:11px; flex:1; min-width:180px; }
+    .legenda-item { display:flex; align-items:center; gap:10px; font-size:.92rem; }
+    .legenda-item .marca-cor { width:13px; height:13px; border-radius:4px; flex:none; }
+    .legenda-item .li-nome { font-weight:600; flex:1; }
+    .legenda-item .li-valor { color:var(--cinza); font-weight:700; }
+    .legenda-item .li-pct { color:var(--cinza); font-size:.82rem; min-width:46px; text-align:right; }
+
+    /* Barras */
+    .barras { display:grid; gap:13px; }
+    .barra-item .barra-topo { display:flex; justify-content:space-between; font-size:.88rem; font-weight:600; margin-bottom:5px; }
+    .barra-item .barra-topo .b-valor { color:var(--cinza); }
+    .barra-trilha { height:13px; background:var(--cinza-claro); border-radius:999px; overflow:hidden; }
+    .barra-preenchida { height:100%; border-radius:999px; width:0; transition:width .7s cubic-bezier(.22,1,.36,1); }
+
+    /* Linha (evolução) */
+    .linha-svg { width:100%; height:auto; }
+    .linha-labels { display:flex; justify-content:space-between; margin-top:8px; }
+    .linha-labels span { font-size:.72rem; color:var(--cinza); font-weight:600; flex:1; text-align:center; }
+
+    /* Balanço */
+    .balanco-linha { margin-bottom:16px; }
+    .balanco-topo { display:flex; justify-content:space-between; font-weight:700; font-size:.95rem; margin-bottom:6px; }
+    .balanco-trilha { height:26px; background:var(--cinza-claro); border-radius:8px; overflow:hidden; }
+    .balanco-preenchida { height:100%; width:0; border-radius:8px; transition:width .7s cubic-bezier(.22,1,.36,1); display:flex; align-items:center; justify-content:flex-end; padding-right:10px; color:#fff; font-weight:800; font-size:.82rem; }
+    .balanco-resultado { display:flex; align-items:baseline; gap:10px; border-top:1px dashed var(--borda); padding-top:16px; margin-top:4px; }
+    .balanco-resultado .n { font-size:2rem; font-weight:800; color:var(--verde-escuro); letter-spacing:-.03em; }
+    .balanco-resultado .t { color:var(--cinza); font-weight:600; }
+
+    /* Recomendações */
+    .rec-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+    .rec { background:#fff; border:1px solid var(--borda); border-radius:var(--raio); box-shadow:var(--sombra-sm); padding:20px; display:flex; flex-direction:column; gap:10px; }
+    .rec-topo { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    .prio { font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.05em; padding:4px 10px; border-radius:999px; }
+    .prio.alta { color:#a01818; background:#fbe3e3; } .prio.media { color:#7a5300; background:var(--amarelo-claro); } .prio.baixa { color:var(--verde-escuro); background:var(--verde-claro); }
+    .rec h3 { font-size:1.05rem; margin:0; }
+    .rec p { margin:0; font-size:.92rem; }
+    .rec-impacto { font-size:1.15rem; font-weight:800; letter-spacing:-.02em; }
+    .rec-impacto.reduz { color:var(--verde-escuro); } .rec-impacto.remove { color:var(--teal-escuro); }
+    .rec-chips { display:flex; flex-wrap:wrap; gap:7px; margin-top:auto; }
+    .chip { font-size:.76rem; font-weight:700; padding:5px 10px; border-radius:999px; background:var(--cinza-claro); color:var(--cinza); }
+    .chip.e1 { background:var(--verde-claro); color:var(--verde-escuro); } .chip.e2 { background:var(--azul-claro); color:var(--azul); } .chip.e3 { background:var(--amarelo-claro); color:#7a5300; } .chip.rem { background:var(--teal-claro); color:var(--teal-escuro); }
+
+    .resumo-potencial { margin-top:20px; background:linear-gradient(135deg,var(--verde) 0%,var(--verde-escuro) 100%); color:#fff; border-radius:var(--raio); padding:22px 24px; }
+    .resumo-potencial h3 { color:#fff; margin:0 0 6px; font-size:1.15rem; }
+    .resumo-potencial p { color:rgba(255,255,255,.92); margin:0; }
+    .resumo-potencial b { color:var(--amarelo); }
+
+    /* CTA final */
+    .cta-final { background:#10240f; color:#cbd9c9; border-radius:var(--raio); padding:40px 32px; text-align:center; margin:10px 0 40px; }
+    .cta-final h2 { color:#fff; font-size:clamp(1.4rem,3vw,2rem); margin:0 0 10px; }
+    .cta-final p { color:#a9c0a6; max-width:620px; margin:0 auto 22px; }
+    .cta-final .acoes { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+    .btn-amarelo { background:var(--amarelo); color:#1a1a1a; } .btn-amarelo:hover { background:#e79a1c; }
+    .btn-fantasma { background:transparent; color:#fff; border-color:rgba(255,255,255,.4); } .btn-fantasma:hover { border-color:#fff; background:rgba(255,255,255,.08); }
+
+    .rodape-nota { text-align:center; color:var(--cinza); font-size:.84rem; padding:0 0 40px; }
+
+    /* Reveal */
+    .revelar { opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease; }
+    .revelar.visivel { opacity:1; transform:none; }
+    @media (prefers-reduced-motion: reduce) { html{scroll-behavior:auto;} .revelar{opacity:1;transform:none;transition:none;} .barra-preenchida,.balanco-preenchida{transition:none;} }
+
+    @media (max-width: 980px) {
+      .kpis { grid-template-columns:repeat(2,1fr); }
+      .grid-2, .grid-32 { grid-template-columns:1fr; }
+      .rec-grid { grid-template-columns:repeat(2,1fr); }
+    }
+    @media (max-width: 620px) {
+      .kpis { grid-template-columns:1fr 1fr; }
+      .rec-grid { grid-template-columns:1fr; }
+      .topbar-acoes .btn-contorno { display:none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="container">
+      <a class="marca" href="index.html" aria-label="Carbona — voltar ao site">
+        <span class="emblema" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="anel" x1="6" y1="10" x2="38" y2="40" gradientUnits="userSpaceOnUse"><stop stop-color="#2E7D32"/><stop offset="1" stop-color="#38B08C"/></linearGradient></defs>
+            <circle cx="22" cy="24" r="15" stroke="url(#anel)" stroke-width="4.4" fill="none"/>
+            <path d="M22 31.2c-4.3 0-7.6-3.3-7.6-7.5 0-3.5 2.5-6.7 7.6-8.7 5.1 2 7.6 5.2 7.6 8.7 0 4.2-3.3 7.5-7.6 7.5Z" fill="#2E7D32"/>
+            <path d="M22 16.4v13.4" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+            <g fill="#2f3a45"><circle cx="37.5" cy="17.5" r="3.4"/><circle cx="43.5" cy="13.2" r="2.3"/><circle cx="43.6" cy="22.4" r="2.3"/></g>
+            <g stroke="#2f3a45" stroke-width="1.7"><line x1="37.5" y1="17.5" x2="43.5" y2="13.2"/><line x1="37.5" y1="17.5" x2="43.6" y2="22.4"/></g>
+          </svg>
+        </span>
+        <span>Carbon<b>a</b></span>
+      </a>
+      <div class="topbar-acoes">
+        <a href="index.html" class="link-voltar">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+          Voltar ao site
+        </a>
+        <a href="index.html#contato" class="btn btn-primario">Solicitar meu relatório</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Banner do relatório -->
+  <section class="relatorio-topo">
+    <div class="container">
+      <span class="aviso-exemplo" role="note">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Exemplo ilustrativo • empresa e dados fictícios
+      </span>
+      <div class="relatorio-cabecalho">
+        <div>
+          <h1>Relatório de Carbono — Laticínios Vale Verde Ltda.</h1>
+          <p class="meta">Ano-base 2025 • Escopos 1, 2 e 3 + fixação • Metodologia GHG Protocol / ISO 14064-1</p>
+        </div>
+        <span class="cobertura"><span class="bolinha"></span> Cobertura de dados: 100% — inventário completo</span>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <div class="container">
+
+      <!-- KPIs -->
+      <div class="bloco kpis revelar">
+        <div class="kpi"><div class="rotulo">Emissões brutas</div><div class="valor" id="kpi-bruto">—</div><div class="obs">Escopos 1 + 2 + 3</div></div>
+        <div class="kpi teal"><div class="rotulo">Remoções (fixação)</div><div class="valor" id="kpi-remocoes">—</div><div class="obs">Carbono sequestrado</div></div>
+        <div class="kpi escuro"><div class="rotulo">Balanço líquido</div><div class="valor" id="kpi-liquido">—</div><div class="obs">Brutas − remoções</div></div>
+        <div class="kpi azul"><div class="rotulo">Intensidade</div><div class="valor" id="kpi-intensidade">—</div><div class="obs">por tonelada de produto</div></div>
+        <div class="kpi amarelo"><div class="rotulo">vs. 2024</div><div class="valor" id="kpi-yoy">—</div><div class="obs baixa" id="kpi-yoy-obs">—</div></div>
+      </div>
+
+      <!-- Distribuição por escopo + por fonte -->
+      <div class="bloco grid-32">
+        <div class="painel revelar">
+          <h2 class="painel-titulo">Distribuição por escopo</h2>
+          <p class="painel-sub">De onde vêm as emissões brutas.</p>
+          <div class="donut-bloco">
+            <svg class="donut-svg" id="donut" viewBox="0 0 42 42" role="img" aria-label="Emissões por escopo"></svg>
+            <div class="donut-legenda" id="donut-legenda"></div>
+          </div>
+        </div>
+        <div class="painel revelar">
+          <h2 class="painel-titulo">Principais fontes</h2>
+          <p class="painel-sub">Onde estão as maiores oportunidades de corte.</p>
+          <div class="barras" id="barras"></div>
+        </div>
+      </div>
+
+      <!-- Evolução mensal + Balanço -->
+      <div class="bloco grid-2">
+        <div class="painel revelar">
+          <h2 class="painel-titulo">Evolução mensal (tCO₂e)</h2>
+          <p class="painel-sub">Emissões brutas ao longo de 2025.</p>
+          <svg class="linha-svg" id="linha" viewBox="0 0 340 150" role="img" aria-label="Evolução mensal das emissões"></svg>
+          <div class="linha-labels" id="linha-labels"></div>
+        </div>
+        <div class="painel revelar">
+          <h2 class="painel-titulo">Balanço: emissões x remoções</h2>
+          <p class="painel-sub">Quanto a fixação de carbono compensa das emissões.</p>
+          <div id="balanco"></div>
+        </div>
+      </div>
+
+      <!-- Fixação por categoria -->
+      <div class="bloco painel revelar">
+        <h2 class="painel-titulo">Remoções por categoria de fixação (tCO₂e)</h2>
+        <p class="painel-sub">Carbono sequestrado nas áreas da operação.</p>
+        <div class="barras" id="barras-fix"></div>
+      </div>
+
+      <!-- Recomendações -->
+      <div class="bloco">
+        <div class="painel revelar" style="background:transparent; border:none; box-shadow:none; padding:0;">
+          <h2 class="painel-titulo" style="font-size:.9rem;">Recomendações priorizadas</h2>
+          <p class="painel-sub">O que fazer primeiro para reduzir o balanço — com impacto estimado por ação.</p>
+        </div>
+        <div class="rec-grid" id="recomendacoes"></div>
+        <div class="resumo-potencial revelar" id="resumo-potencial"></div>
+      </div>
+
+      <!-- CTA final -->
+      <div class="cta-final revelar">
+        <h2>Quer um relatório assim para a sua empresa?</h2>
+        <p>Este é um exemplo com dados fictícios. Com o seu Kit de Coleta preenchido, entregamos o relatório completo — dashboard, gráficos, balanço com a fixação e um plano de redução sob medida.</p>
+        <div class="acoes">
+          <a href="index.html#contato" class="btn btn-amarelo">Solicitar meu relatório</a>
+          <a href="Kit-Coleta-Dados-Carbono.xlsx" class="btn btn-fantasma" download>Baixar Kit de Coleta (.xlsx)</a>
+        </div>
+      </div>
+
+      <p class="rodape-nota">Carbona • Consultoria em Gestão de Carbono &amp; Ciência de Dados — exemplo demonstrativo com dados fictícios.</p>
+
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      "use strict";
+      var CORES = { 1: "#2E7D32", 2: "#1565C0", 3: "#F9A825" };
+      var TEAL = "#0f9d78";
+
+      // ---- Dados fictícios do relatório de exemplo ----
+      var DADOS = {
+        producao: 12000, // toneladas de produto no ano (para intensidade)
+        yoy: -8,         // variação % vs. ano anterior (emissões brutas)
+        porEscopo: { 1: 742, 2: 318, 3: 588 },
+        porFonte: [
+          { rotulo: "Diesel (frota)", escopo: 1, t: 468 },
+          { rotulo: "Energia elétrica (SIN)", escopo: 2, t: 318 },
+          { rotulo: "Fretes rodoviários", escopo: 3, t: 262 },
+          { rotulo: "Resíduos para aterro", escopo: 3, t: 186 },
+          { rotulo: "GLP (caldeira)", escopo: 1, t: 174 },
+          { rotulo: "Viagens aéreas", escopo: 3, t: 140 },
+          { rotulo: "Gases refrigerantes", escopo: 1, t: 100 }
+        ],
+        mensal: [118, 122, 140, 135, 150, 138, 145, 152, 130, 142, 128, 148],
+        meses: ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"],
+        porFix: [
+          { rotulo: "Reflorestamento com nativas", t: 210 },
+          { rotulo: "Sistemas agroflorestais (SAF)", t: 96 },
+          { rotulo: "Recuperação de pastagem", t: 78 },
+          { rotulo: "Carbono no solo (plantio direto)", t: 62 },
+          { rotulo: "Vegetação nativa (APP/RL)", t: 50 }
+        ],
+        recomendacoes: [
+          { prio: "alta", titulo: "Contratar energia renovável certificada (I-REC)", desc: "Zera quase todo o Escopo 2 com contratação de energia limpa rastreável.", tipo: "reduz", valor: 300, chip: "e2", chipTxt: "Escopo 2", esforco: "Esforço baixo" },
+          { prio: "alta", titulo: "Biodiesel (B100) na frota própria", desc: "Substituição parcial do diesel fóssil nos veículos e geradores.", tipo: "reduz", valor: 132, chip: "e1", chipTxt: "Escopo 1", esforco: "Esforço médio" },
+          { prio: "media", titulo: "Ampliar reflorestamento (+40 ha de nativas)", desc: "Novas áreas de fixação aumentam as remoções do balanço.", tipo: "remove", valor: 120, chip: "rem", chipTxt: "Remoções", esforco: "Esforço médio" },
+          { prio: "media", titulo: "Biodigestor para resíduos orgânicos", desc: "Desvia resíduos do aterro e captura metano para energia.", tipo: "reduz", valor: 96, chip: "e3", chipTxt: "Escopo 3", esforco: "Esforço alto" },
+          { prio: "media", titulo: "Otimizar rotas e ocupação de carga", desc: "Roteirização e consolidação de fretes reduzem t.km rodados.", tipo: "reduz", valor: 58, chip: "e3", chipTxt: "Escopo 3", esforco: "Esforço baixo" },
+          { prio: "baixa", titulo: "Gás refrigerante de menor GWP", desc: "Troca gradual do R-410A e correção de vazamentos.", tipo: "reduz", valor: 62, chip: "e1", chipTxt: "Escopo 1", esforco: "Esforço médio" }
+        ]
+      };
+
+      // ---- Formatação pt-BR ----
+      function fmt(n, dec) { return Number(n).toLocaleString("pt-BR", { minimumFractionDigits: dec || 0, maximumFractionDigits: dec != null ? dec : 0 }); }
+
+      function somar(obj) { var s = 0; for (var k in obj) if (obj.hasOwnProperty(k)) s += obj[k]; return s; }
+
+      // ---- KPIs ----
+      var bruto = somar(DADOS.porEscopo);
+      var remocoes = 0; DADOS.porFix.forEach(function (f) { remocoes += f.t; });
+      var liquido = bruto - remocoes;
+      var intensidade = bruto / DADOS.producao;
+
+      document.getElementById("kpi-bruto").innerHTML = fmt(bruto) + ' <small>tCO₂e</small>';
+      document.getElementById("kpi-remocoes").innerHTML = "−" + fmt(remocoes) + ' <small>tCO₂e</small>';
+      document.getElementById("kpi-liquido").innerHTML = fmt(liquido) + ' <small>tCO₂e</small>';
+      document.getElementById("kpi-intensidade").innerHTML = fmt(intensidade, 2) + ' <small>tCO₂e/t</small>';
+      document.getElementById("kpi-yoy").textContent = (DADOS.yoy > 0 ? "+" : "−") + Math.abs(DADOS.yoy) + "%";
+      document.getElementById("kpi-yoy-obs").textContent = (DADOS.yoy < 0 ? "▼ queda vs. ano anterior" : "▲ alta vs. ano anterior");
+
+      // ---- Donut por escopo (círculo de circunferência 100) ----
+      function renderDonut(porEscopo, total) {
+        var svg = document.getElementById("donut");
+        var cx = 21, cy = 21, r = 15.915, sw = 5.5;
+        var html = '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="#eef2ee" stroke-width="' + sw + '"/>';
+        var cum = 0;
+        [1, 2, 3].forEach(function (e) {
+          var val = porEscopo[e]; if (!val) return;
+          var pct = (val / total) * 100;
+          var offset = 100 - cum + 25;
+          html += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="' + CORES[e] +
+            '" stroke-width="' + sw + '" stroke-dasharray="' + pct + " " + (100 - pct) +
+            '" stroke-dashoffset="' + offset + '" stroke-linecap="butt"/>';
+          cum += pct;
+        });
+        html += '<text x="' + cx + '" y="' + (cy - 0.2) + '" text-anchor="middle" font-size="6" font-weight="800" fill="#1b5e20" style="font-family:inherit">' + fmt(total) + '</text>';
+        html += '<text x="' + cx + '" y="' + (cy + 4.6) + '" text-anchor="middle" font-size="2.6" font-weight="700" fill="#555" style="font-family:inherit">tCO₂e brutas</text>';
+        svg.innerHTML = html;
+
+        var nomes = { 1: "Escopo 1 — Diretas", 2: "Escopo 2 — Energia", 3: "Escopo 3 — Indiretas" };
+        var leg = "";
+        [1, 2, 3].forEach(function (e) {
+          var val = porEscopo[e]; var pct = total > 0 ? (val / total) * 100 : 0;
+          leg += '<div class="legenda-item"><span class="marca-cor" style="background:' + CORES[e] + '"></span>' +
+            '<span class="li-nome">' + nomes[e] + '</span>' +
+            '<span class="li-valor">' + fmt(val) + ' t</span>' +
+            '<span class="li-pct">' + fmt(pct, 1) + '%</span></div>';
+        });
+        document.getElementById("donut-legenda").innerHTML = leg;
+      }
+
+      // ---- Barras genéricas ----
+      function renderBarras(alvo, itens, corFn) {
+        var lista = itens.slice().sort(function (a, b) { return b.t - a.t; });
+        var max = Math.max.apply(null, lista.map(function (f) { return f.t; }));
+        var html = "";
+        lista.forEach(function (f) {
+          var w = max > 0 ? (f.t / max) * 100 : 0;
+          html += '<div class="barra-item">' +
+            '<div class="barra-topo"><span>' + f.rotulo + '</span><span class="b-valor">' + fmt(f.t) + ' tCO₂e</span></div>' +
+            '<div class="barra-trilha"><div class="barra-preenchida" data-w="' + w + '" style="background:' + corFn(f) + '"></div></div>' +
+            '</div>';
+        });
+        document.getElementById(alvo).innerHTML = html;
+      }
+
+      // ---- Linha / área (evolução mensal) ----
+      function renderLinha(valores, meses) {
+        var W = 340, H = 150, padL = 8, padR = 8, padT = 12, padB = 12;
+        var plotW = W - padL - padR, plotH = H - padT - padB, base = H - padB;
+        var max = Math.max.apply(null, valores) * 1.15;
+        var n = valores.length;
+        var pts = valores.map(function (v, i) {
+          var x = padL + (n === 1 ? plotW / 2 : (plotW * i) / (n - 1));
+          var y = base - (v / max) * plotH;
+          return { x: x, y: y };
+        });
+        var svg = document.getElementById("linha");
+        var grid = "";
+        for (var g = 0; g <= 3; g++) {
+          var gy = padT + (plotH * g) / 3;
+          grid += '<line x1="' + padL + '" y1="' + gy + '" x2="' + (W - padR) + '" y2="' + gy + '" stroke="#eef2ee" stroke-width="1"/>';
+        }
+        var linePts = pts.map(function (p) { return p.x.toFixed(1) + "," + p.y.toFixed(1); }).join(" ");
+        var area = "M" + padL + "," + base + " L" + pts.map(function (p) { return p.x.toFixed(1) + "," + p.y.toFixed(1); }).join(" L") + " L" + (W - padR) + "," + base + " Z";
+        var dots = pts.map(function (p) { return '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="2.6" fill="#fff" stroke="#2E7D32" stroke-width="2"/>'; }).join("");
+        svg.innerHTML =
+          '<defs><linearGradient id="gradArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2E7D32" stop-opacity="0.28"/><stop offset="1" stop-color="#2E7D32" stop-opacity="0"/></linearGradient></defs>' +
+          grid +
+          '<path d="' + area + '" fill="url(#gradArea)"/>' +
+          '<polyline points="' + linePts + '" fill="none" stroke="#2E7D32" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>' +
+          dots;
+        document.getElementById("linha-labels").innerHTML = meses.map(function (m) { return "<span>" + m + "</span>"; }).join("");
+      }
+
+      // ---- Balanço emissões x remoções ----
+      function renderBalanco(bruto, remocoes) {
+        var liquido = bruto - remocoes;
+        var pctRem = bruto > 0 ? (remocoes / bruto) * 100 : 0;
+        var html =
+          '<div class="balanco-linha">' +
+            '<div class="balanco-topo"><span>Emissões brutas</span><span>' + fmt(bruto) + ' tCO₂e</span></div>' +
+            '<div class="balanco-trilha"><div class="balanco-preenchida" data-w="100" style="background:#2E7D32">100%</div></div>' +
+          '</div>' +
+          '<div class="balanco-linha">' +
+            '<div class="balanco-topo"><span>Remoções (fixação)</span><span>−' + fmt(remocoes) + ' tCO₂e</span></div>' +
+            '<div class="balanco-trilha"><div class="balanco-preenchida" data-w="' + pctRem.toFixed(1) + '" style="background:' + TEAL + '">' + fmt(pctRem, 0) + '%</div></div>' +
+          '</div>' +
+          '<div class="balanco-resultado"><span class="n">' + fmt(liquido) + ' <span style="font-size:1rem;">tCO₂e</span></span>' +
+          '<span class="t">balanço líquido — a fixação compensa ' + fmt(pctRem, 0) + '% das emissões</span></div>';
+        document.getElementById("balanco").innerHTML = html;
+      }
+
+      // ---- Recomendações ----
+      function renderRecomendacoes(recs) {
+        var totReduz = 0, totRem = 0;
+        var html = "";
+        recs.forEach(function (r) {
+          if (r.tipo === "remove") totRem += r.valor; else totReduz += r.valor;
+          var sinal = r.tipo === "remove" ? "+" : "−";
+          var classeImp = r.tipo === "remove" ? "remove" : "reduz";
+          var sufixo = r.tipo === "remove" ? " tCO₂e removidas/ano" : " tCO₂e/ano";
+          html += '<article class="rec">' +
+            '<div class="rec-topo"><span class="prio ' + r.prio + '">' + (r.prio === "alta" ? "Prioridade alta" : r.prio === "media" ? "Prioridade média" : "Prioridade baixa") + '</span></div>' +
+            '<h3>' + r.titulo + '</h3>' +
+            '<p>' + r.desc + '</p>' +
+            '<div class="rec-impacto ' + classeImp + '">' + sinal + fmt(r.valor) + sufixo + '</div>' +
+            '<div class="rec-chips"><span class="chip ' + r.chip + '">' + r.chipTxt + '</span><span class="chip">' + r.esforco + '</span></div>' +
+            '</article>';
+        });
+        document.getElementById("recomendacoes").innerHTML = html;
+
+        var brutoAtual = somar(DADOS.porEscopo);
+        var remAtual = 0; DADOS.porFix.forEach(function (f) { remAtual += f.t; });
+        var novoLiquido = (brutoAtual - totReduz) - (remAtual + totRem);
+        document.getElementById("resumo-potencial").innerHTML =
+          "<h3>Potencial de redução mapeado</h3>" +
+          "<p><b>−" + fmt(totReduz) + " tCO₂e/ano</b> em emissões evitadas e <b>+" + fmt(totRem) + " tCO₂e/ano</b> em novas remoções. " +
+          "Aplicando o plano, o balanço líquido cairia de <b>" + fmt(brutoAtual - remAtual) + "</b> para cerca de <b>" + fmt(novoLiquido) + " tCO₂e/ano</b>.</p>";
+      }
+
+      // ---- Animação das barras + reveal ----
+      function animarBarras() {
+        document.querySelectorAll(".barra-preenchida, .balanco-preenchida").forEach(function (el) {
+          var w = el.getAttribute("data-w");
+          if (w != null) requestAnimationFrame(function () { el.style.width = w + "%"; });
+        });
+      }
+      function configurarRevelar() {
+        var alvos = document.querySelectorAll(".revelar");
+        if (!("IntersectionObserver" in window)) { alvos.forEach(function (el) { el.classList.add("visivel"); }); return; }
+        var obs = new IntersectionObserver(function (entries, o) {
+          entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("visivel"); o.unobserve(en.target); } });
+        }, { threshold: 0.12 });
+        alvos.forEach(function (el) { obs.observe(el); });
+      }
+
+      // ---- Inicializa ----
+      renderDonut(DADOS.porEscopo, bruto);
+      renderBarras("barras", DADOS.porFonte, function (f) { return CORES[f.escopo]; });
+      renderBarras("barras-fix", DADOS.porFix, function () { return TEAL; });
+      renderLinha(DADOS.mensal, DADOS.meses);
+      renderBalanco(bruto, remocoes);
+      renderRecomendacoes(DADOS.recomendacoes);
+      configurarRevelar();
+      setTimeout(animarBarras, 250);
+    })();
+  </script>
+</body>
+</html>
