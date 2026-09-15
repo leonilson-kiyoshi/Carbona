@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Infográfico — O que a Carbona faz e por que isso é dinheiro</title>
+  <meta name="description" content="Infográfico: como a Carbona transforma seus consumos e áreas em um relatório de carbono, e por que medir emissão e fixação de carbono importa financeiramente." />
+  <meta name="theme-color" content="#2E7D32" />
+  <link rel="icon" type="image/png" href="Generatedimage_1789424126672.png" />
+
+  <style>
+    :root {
+      --verde:#2e7d32; --verde-escuro:#1b5e20; --verde-claro:#e8f2e9;
+      --azul:#1565c0; --azul-claro:#e7f0fb;
+      --amarelo:#f9a825; --amarelo-claro:#fef3d8; --amarelo-escuro:#8a5b00;
+      --teal:#0f9d78; --teal-escuro:#0b7a5e; --teal-claro:#e2f6f0;
+      --vermelho:#c62828; --vermelho-claro:#fbe3e3;
+      --branco:#fff; --texto:#1a1a1a; --cinza:#555; --cinza-claro:#f5f7f5; --borda:#e2e8e2;
+      --raio:16px; --raio-sm:9px;
+      --sombra-sm:0 1px 2px rgba(16,24,16,.06),0 1px 3px rgba(16,24,16,.08);
+      --sombra:0 4px 6px rgba(16,24,16,.05),0 10px 24px rgba(16,24,16,.07);
+      --largura-max:1080px; --altura-nav:64px;
+      --fonte:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;}
+    body{margin:0;font-family:var(--fonte);color:var(--texto);background:var(--cinza-claro);line-height:1.55;font-size:16px;-webkit-font-smoothing:antialiased;}
+    h1,h2,h3,h4{line-height:1.15;font-weight:800;letter-spacing:-.02em;margin:0 0 .4em;}
+    p{margin:0 0 1em;color:var(--cinza);}
+    a{color:var(--verde);text-decoration:none;}
+    svg{display:block;}
+    .container{width:100%;max-width:var(--largura-max);margin:0 auto;padding:0 24px;}
+    :focus-visible{outline:3px solid var(--azul);outline-offset:2px;border-radius:4px;}
+
+    /* Topbar */
+    .topbar{position:sticky;top:0;z-index:100;height:var(--altura-nav);background:rgba(255,255,255,.94);backdrop-filter:saturate(180%) blur(10px);border-bottom:1px solid var(--borda);}
+    .topbar .container{height:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+    .marca{display:inline-flex;align-items:center;gap:10px;font-weight:800;font-size:1.1rem;color:var(--texto);}
+    .marca .emblema{width:38px;height:38px;flex:none;}
+    .marca b{color:var(--verde);}
+    .topbar-acoes{display:flex;align-items:center;gap:10px;}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;font-size:.95rem;font-weight:700;line-height:1;padding:12px 18px;border-radius:var(--raio-sm);border:2px solid transparent;cursor:pointer;transition:transform .12s ease,background .2s ease,box-shadow .2s ease,border-color .2s ease;white-space:nowrap;}
+    .btn:active{transform:translateY(1px);}
+    .btn-primario{background:var(--verde);color:#fff;box-shadow:var(--sombra-sm);}
+    .btn-primario:hover{background:var(--verde-escuro);}
+    .btn-contorno{background:#fff;color:var(--verde-escuro);border-color:var(--borda);}
+    .btn-contorno:hover{border-color:var(--verde);background:var(--verde-claro);}
+    .btn-amarelo{background:var(--amarelo);color:#1a1a1a;}
+    .btn-amarelo:hover{background:#e79a1c;}
+    .link-voltar{font-weight:700;font-size:.92rem;color:var(--cinza);display:inline-flex;align-items:center;gap:7px;}
+    .link-voltar:hover{color:var(--verde-escuro);}
+
+    /* Folha do infográfico */
+    .folha{max-width:var(--largura-max);margin:26px auto 50px;background:#fff;border:1px solid var(--borda);border-radius:22px;box-shadow:var(--sombra);overflow:hidden;}
+    .cabecalho{padding:40px 40px 30px;background:radial-gradient(900px 360px at 88% -20%,var(--teal-claro),transparent 60%),linear-gradient(180deg,var(--verde-claro),#fff 75%);border-bottom:1px solid var(--borda);}
+    .eyebrow{display:inline-block;font-size:.78rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--verde);background:#fff;border:1px solid #bcdfc0;padding:6px 13px;border-radius:999px;margin-bottom:14px;}
+    .cabecalho h1{font-size:clamp(1.7rem,4vw,2.6rem);max-width:16ch;}
+    .cabecalho p{font-size:1.08rem;max-width:62ch;margin:0;}
+
+    .secao{padding:36px 40px;border-bottom:1px solid var(--borda);}
+    .secao:last-child{border-bottom:0;}
+    .secao-tit{display:flex;align-items:center;gap:12px;margin-bottom:22px;}
+    .secao-tit .n{flex:none;width:34px;height:34px;border-radius:50%;background:var(--verde);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:1rem;}
+    .secao-tit h2{font-size:clamp(1.3rem,2.6vw,1.7rem);margin:0;}
+
+    /* Dois lados do carbono */
+    .lados{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:stretch;}
+    .lado{border-radius:var(--raio);padding:22px;border:1px solid var(--borda);}
+    .lado.emite{background:var(--amarelo-claro);border-color:#f3d38a;}
+    .lado.fixa{background:var(--teal-claro);border-color:#b8e6d7;}
+    .lado .ico{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
+    .lado.emite .ico{background:#fff;color:var(--amarelo-escuro);}
+    .lado.fixa .ico{background:#fff;color:var(--teal-escuro);}
+    .lado h3{font-size:1.15rem;margin:0 0 6px;}
+    .lado p{margin:0;font-size:.95rem;}
+    .lado .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;}
+    .lado .tag{font-size:.78rem;font-weight:700;padding:4px 10px;border-radius:999px;background:#fff;border:1px solid rgba(0,0,0,.08);color:var(--texto);}
+    .lados .versus{display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--cinza);font-size:1.4rem;}
+    .balanco{margin-top:18px;background:linear-gradient(135deg,var(--verde) 0%,var(--verde-escuro) 100%);color:#fff;border-radius:var(--raio);padding:20px 24px;text-align:center;}
+    .balanco .eq{font-size:clamp(1.05rem,2.6vw,1.5rem);font-weight:800;letter-spacing:-.01em;}
+    .balanco .eq b{color:var(--amarelo);}
+    .balanco small{display:block;opacity:.9;margin-top:6px;font-weight:600;}
+
+    /* Fluxo do que a Carbona faz */
+    .fluxo{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;}
+    .passo{background:var(--cinza-claro);border:1px solid var(--borda);border-radius:var(--raio);padding:20px 16px;position:relative;}
+    .passo .num{position:absolute;top:-12px;left:16px;width:28px;height:28px;border-radius:50%;background:var(--verde);color:#fff;font-weight:800;font-size:.9rem;display:flex;align-items:center;justify-content:center;box-shadow:var(--sombra-sm);}
+    .passo .ico{width:44px;height:44px;border-radius:12px;background:#fff;border:1px solid var(--borda);display:flex;align-items:center;justify-content:center;color:var(--verde);margin:8px 0 12px;}
+    .passo h3{font-size:1rem;margin:0 0 5px;}
+    .passo p{font-size:.86rem;margin:0;}
+
+    /* Benefícios financeiros */
+    .beneficios{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+    .benef{background:#fff;border:1px solid var(--borda);border-radius:var(--raio);padding:20px;box-shadow:var(--sombra-sm);border-top:4px solid var(--amarelo);}
+    .benef .ico{width:44px;height:44px;border-radius:12px;background:var(--amarelo-claro);color:var(--amarelo-escuro);display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
+    .benef h3{font-size:1.05rem;margin:0 0 6px;}
+    .benef p{font-size:.9rem;margin:0;}
+    .benef.receita{border-top-color:var(--teal);} .benef.receita .ico{background:var(--teal-claro);color:var(--teal-escuro);}
+    .benef.mercado{border-top-color:var(--azul);} .benef.mercado .ico{background:var(--azul-claro);color:var(--azul);}
+
+    /* Contraste custo de não saber */
+    .contraste{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+    .col-contraste{border-radius:var(--raio);padding:22px;}
+    .col-contraste h3{display:flex;align-items:center;gap:9px;font-size:1.1rem;margin:0 0 12px;}
+    .col-contraste ul{margin:0;padding:0;list-style:none;display:grid;gap:10px;}
+    .col-contraste li{display:flex;gap:10px;align-items:flex-start;font-size:.94rem;font-weight:500;}
+    .col-contraste li svg{flex:none;margin-top:2px;}
+    .sem{background:var(--vermelho-claro);border:1px solid #f1b7b7;}
+    .sem h3{color:var(--vermelho);} .sem li{color:#7a1616;}
+    .com{background:var(--verde-claro);border:1px solid #bcdfc0;}
+    .com h3{color:var(--verde-escuro);} .com li{color:#1c4e20;}
+
+    /* Exemplo numérico */
+    .exemplo{margin-top:22px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;background:var(--amarelo-claro);border:1px dashed #e3b657;border-radius:var(--raio);padding:18px 22px;}
+    .exemplo .big{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;color:var(--amarelo-escuro);letter-spacing:-.02em;line-height:1;}
+    .exemplo p{margin:0;font-size:.92rem;color:#6b4a06;}
+
+    /* CTA */
+    .cta{padding:34px 40px;background:#10240f;color:#cbd9c9;text-align:center;}
+    .cta h2{color:#fff;font-size:clamp(1.3rem,3vw,1.9rem);margin:0 0 8px;}
+    .cta p{color:#a9c0a6;max-width:60ch;margin:0 auto 20px;}
+    .cta .acoes{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+    .btn-fantasma{background:transparent;color:#fff;border-color:rgba(255,255,255,.4);}
+    .btn-fantasma:hover{border-color:#fff;background:rgba(255,255,255,.08);}
+
+    .rodape-nota{text-align:center;color:var(--cinza);font-size:.82rem;padding:0 24px 40px;max-width:70ch;margin:0 auto;}
+
+    @media (max-width:900px){
+      .fluxo{grid-template-columns:repeat(2,1fr);}
+      .beneficios{grid-template-columns:repeat(2,1fr);}
+    }
+    @media (max-width:680px){
+      .cabecalho,.secao,.cta{padding-left:24px;padding-right:24px;}
+      .lados{grid-template-columns:1fr;}
+      .lados .versus{transform:rotate(90deg);}
+      .beneficios,.fluxo,.contraste{grid-template-columns:1fr;}
+    }
+
+    /* Impressão / salvar em PDF */
+    @media print{
+      body{background:#fff;}
+      .topbar,.no-print{display:none !important;}
+      .folha{box-shadow:none;border:none;margin:0;border-radius:0;max-width:none;}
+      .secao,.cabecalho{page-break-inside:avoid;}
+      *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar no-print">
+    <div class="container">
+      <a class="marca" href="index.html" aria-label="Carbona — início">
+        <span class="emblema" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="anel" x1="6" y1="10" x2="38" y2="40" gradientUnits="userSpaceOnUse"><stop stop-color="#2E7D32"/><stop offset="1" stop-color="#38B08C"/></linearGradient></defs>
+            <circle cx="22" cy="24" r="15" stroke="url(#anel)" stroke-width="4.4" fill="none"/>
+            <path d="M22 31.2c-4.3 0-7.6-3.3-7.6-7.5 0-3.5 2.5-6.7 7.6-8.7 5.1 2 7.6 5.2 7.6 8.7 0 4.2-3.3 7.5-7.6 7.5Z" fill="#2E7D32"/>
+            <path d="M22 16.4v13.4" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+            <g fill="#2f3a45"><circle cx="37.5" cy="17.5" r="3.4"/><circle cx="43.5" cy="13.2" r="2.3"/><circle cx="43.6" cy="22.4" r="2.3"/></g>
+            <g stroke="#2f3a45" stroke-width="1.7"><line x1="37.5" y1="17.5" x2="43.5" y2="13.2"/><line x1="37.5" y1="17.5" x2="43.6" y2="22.4"/></g>
+          </svg>
+        </span>
+        <span>Carbon<b>a</b></span>
+      </a>
+      <div class="topbar-acoes">
+        <a href="index.html" class="link-voltar">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+          Voltar ao site
+        </a>
+        <button type="button" class="btn btn-contorno" id="btn-imprimir">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Imprimir / PDF
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="folha">
+
+    <!-- Cabeçalho -->
+    <div class="cabecalho">
+      <span class="eyebrow">Infográfico</span>
+      <h1>Seu carbono é dinheiro — e a Carbona mostra onde.</h1>
+      <p>Toda operação emite e (às vezes) fixa carbono. Medir isso deixou de ser só pauta ambiental: virou custo, acesso a mercado, crédito e receita. Veja como funciona.</p>
+    </div>
+
+    <!-- Seção 1: dois lados do carbono -->
+    <section class="secao">
+      <div class="secao-tit"><span class="n">1</span><h2>Os dois lados do carbono</h2></div>
+      <div class="lados">
+        <div class="lado emite">
+          <div class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 1 0-4-6.5"/><path d="M3 8h9"/><path d="M3 12h6"/><path d="M3 16h4"/></svg>
+          </div>
+          <h3>Emissão — o que você gera</h3>
+          <p>Combustíveis, energia, resíduos, fretes e viagens viram gases de efeito estufa (medidos em tCO₂e).</p>
+          <div class="tags"><span class="tag">Diesel</span><span class="tag">Energia</span><span class="tag">Resíduos</span><span class="tag">Logística</span></div>
+        </div>
+        <div class="versus" aria-hidden="true">−</div>
+        <div class="lado fixa">
+          <div class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V8"/><path d="M12 8c0-3 2-5 5-5 0 3-2 5-5 5Z"/><path d="M12 12c0-3-2-5-5-5 0 3 2 5 5 5Z"/></svg>
+          </div>
+          <h3>Fixação — o que você remove</h3>
+          <p>Florestas, sistemas agroflorestais e solo bem manejado retiram carbono do ar e armazenam.</p>
+          <div class="tags"><span class="tag">Reflorestamento</span><span class="tag">SAF</span><span class="tag">Solo</span></div>
+        </div>
+      </div>
+      <div class="balanco">
+        <div class="eq">Balanço de carbono <b>=</b> Emissões <b>−</b> Remoções (fixação)</div>
+        <small>Saber os dois lados é o que permite reduzir custo, comprovar resultado e transformar fixação em receita.</small>
+      </div>
+    </section>
+
+    <!-- Seção 2: o que a Carbona faz -->
+    <section class="secao">
+      <div class="secao-tit"><span class="n">2</span><h2>O que a Carbona faz, em 5 passos</h2></div>
+      <div class="fluxo">
+        <div class="passo">
+          <span class="num">1</span>
+          <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2Z"/><path d="M9 13h6"/><path d="M9 17h4"/></svg></div>
+          <h3>Você envia os dados</h3>
+          <p>Consumos e áreas — pela planilha, pelo formulário online ou pela calculadora.</p>
+        </div>
+        <div class="passo">
+          <span class="num">2</span>
+          <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4"/><path d="M15 3h4a2 2 0 0 1 2 2v4"/><path d="M3 15v4a2 2 0 0 0 2 2h4"/><path d="M21 15v4a2 2 0 0 1-2 2h-4"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <h3>Aplicamos os fatores</h3>
+          <p>Cálculo com fatores oficiais (GHG Protocol, ISO 14064-1, IPCC).</p>
+        </div>
+        <div class="passo">
+          <span class="num">3</span>
+          <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6"/><rect x="12" y="8" width="3" height="10"/><rect x="17" y="5" width="3" height="13"/></svg></div>
+          <h3>Você recebe o relatório</h3>
+          <p>Tudo em tCO₂e, por escopo e por fonte, com o balanço emissões × fixação.</p>
+        </div>
+        <div class="passo">
+          <span class="num">4</span>
+          <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1h6c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2Z"/></svg></div>
+          <h3>Recomendações priorizadas</h3>
+          <p>Onde cortar, quanto dá para economizar e o que compensar.</p>
+        </div>
+        <div class="passo">
+          <span class="num">5</span>
+          <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 7 13.5 15.5l-5-5L2 17"/><path d="M16 7h6v6"/></svg></div>
+          <h3>Você age e comprova</h3>
+          <p>Reduz, compensa, vende melhor e mostra resultado com credibilidade.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção 3: por que é dinheiro -->
+    <section class="secao">
+      <div class="secao-tit"><span class="n">3</span><h2>Por que isso importa financeiramente</h2></div>
+      <div class="beneficios">
+        <div class="benef">
+          <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M17 7h4v4"/></svg></div>
+          <h3>Corta custos</h3>
+          <p>Energia, combustível e resíduos são conta que chega todo mês. O que você mede, você reduz.</p>
+        </div>
+        <div class="benef mercado">
+          <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-6 9 6"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg></div>
+          <h3>Destrava vendas</h3>
+          <p>Grandes clientes, licitações e bancos já pedem inventário de carbono. Sem ele, você fica de fora.</p>
+        </div>
+        <div class="benef mercado">
+          <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20Z"/></svg></div>
+          <h3>Abre a exportação</h3>
+          <p>A Europa (CBAM) passa a cobrar a pegada de produtos como aço, alumínio e fertilizantes a partir de 2026.</p>
+        </div>
+        <div class="benef receita">
+          <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v10"/><path d="M15 9.5C15 8 13.7 7 12 7s-3 1-3 2.5S10.3 12 12 12s3 1 3 2.5S13.7 17 12 17s-3-1-3-2.5"/></svg></div>
+          <h3>Vira receita</h3>
+          <p>Áreas de fixação podem gerar créditos de carbono; biocombustível gera CBIOs (RenovaBio).</p>
+        </div>
+        <div class="benef receita">
+          <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="M6 15h4"/></svg></div>
+          <h3>Melhora o crédito</h3>
+          <p>Bancos avaliam risco climático. Dados no lugar abrem linhas de crédito verde e melhores condições.</p>
+        </div>
+        <div class="benef">
+          <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7Z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <h3>Reduz risco regulatório</h3>
+          <p>O mercado regulado de carbono (SBCE) está chegando. Quem já mede entra preparado, sem sustos.</p>
+        </div>
+      </div>
+
+      <div class="exemplo">
+        <div class="big">= R$ na conta</div>
+        <p><strong>Exemplo ilustrativo:</strong> cortar energia e combustível reduz custo direto todo mês; uma área de mata bem documentada pode virar crédito. Sem medir, essas duas oportunidades passam batido — e viram dinheiro deixado na mesa.</p>
+      </div>
+    </section>
+
+    <!-- Seção 4: contraste -->
+    <section class="secao">
+      <div class="secao-tit"><span class="n">4</span><h2>O custo de não saber</h2></div>
+      <div class="contraste">
+        <div class="col-contraste sem">
+          <h3><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6"/><path d="M9 9l6 6"/></svg> Sem medir</h3>
+          <ul>
+            <li><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg> Custos escondidos que ninguém rastreia</li>
+            <li><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg> Contratos e licitações perdidos por falta de dados</li>
+            <li><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg> Crédito de carbono não aproveitado (receita perdida)</li>
+            <li><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg> Risco de multa e de ficar para trás na regra nova</li>
+          </ul>
+        </div>
+        <div class="col-contraste com">
+          <h3><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg> Com a Carbona</h3>
+          <ul>
+            <li><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Economia clara em energia, combustível e resíduos</li>
+            <li><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Porta aberta para clientes, bancos e exportação</li>
+            <li><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Fixação documentada — pronta para virar receita</li>
+            <li><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Conformidade em dia, com relatório auditável</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <div class="cta">
+      <h2>Comece descobrindo o seu número</h2>
+      <p>Use a calculadora para uma estimativa na hora, ou peça o relatório completo com balanço e recomendações.</p>
+      <div class="acoes no-print">
+        <a href="index.html#calculadora" class="btn btn-amarelo">Calcular agora</a>
+        <a href="index.html#contato" class="btn btn-fantasma">Falar com a Carbona</a>
+      </div>
+    </div>
+  </div>
+
+  <p class="rodape-nota">
+    Carbona • Consultoria em Gestão de Carbono &amp; Ciência de Dados. Metodologia GHG Protocol e ISO 14064-1.
+    Referências regulatórias (SBCE, CBAM, RenovaBio) são informativas e evoluem — confirme a aplicação ao seu caso.
+  </p>
+
+  <script>
+    (function () {
+      "use strict";
+      var b = document.getElementById("btn-imprimir");
+      if (b) b.addEventListener("click", function () { window.print(); });
+
+      // Modo "poster" (ativado só com ?print=1): aplica o layout de poster e
+      // publica a altura medida em data-h para gerar o PDF de página única.
+      if (/[?&]print/.test(location.search)) {
+        window.addEventListener("load", function () {
+          var W = 1080; // largura do poster (mantém o layout desktop do infográfico)
+          var css =
+            "html,body{margin:0;padding:0;background:#fff}" +
+            ".topbar,.no-print{display:none !important}" +
+            ".folha{margin:0 !important;border:0 !important;border-radius:0 !important;box-shadow:none !important;width:" + W + "px !important;max-width:" + W + "px !important}" +
+            ".rodape-nota{max-width:none;padding:16px 40px 30px}";
+          var base = document.createElement("style");
+          base.textContent = css;
+          document.head.appendChild(base);
+          var H = Math.ceil(document.documentElement.scrollHeight) + 16;
+          var pg = document.createElement("style");
+          pg.textContent = "@page{size:" + W + "px " + H + "px;margin:0}";
+          document.head.appendChild(pg);
+          document.documentElement.setAttribute("data-h", String(H));
+          document.documentElement.setAttribute("data-pronto", "1");
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
