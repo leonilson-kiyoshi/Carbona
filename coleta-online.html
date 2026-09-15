@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kit de Coleta online — Carbona</title>
+  <meta name="description" content="Preencha online os dados da sua operação (combustíveis, energia, resíduos, logística e fixação de carbono), para um ou vários períodos, e envie para a Carbona montar o seu relatório de carbono." />
+  <meta name="theme-color" content="#2E7D32" />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/png" href="Generatedimage_1789424126672.png" />
+
+  <style>
+    :root {
+      --verde: #2e7d32; --verde-escuro: #1b5e20; --verde-claro: #e8f2e9;
+      --azul: #1565c0; --azul-claro: #e7f0fb;
+      --amarelo: #f9a825; --amarelo-claro: #fef3d8;
+      --teal: #0f9d78; --teal-escuro: #0b7a5e; --teal-claro: #e2f6f0;
+      --branco: #fff; --texto: #1a1a1a; --cinza: #555; --cinza-claro: #f5f7f5; --borda: #e2e8e2;
+      --raio: 14px; --raio-sm: 9px;
+      --sombra-sm: 0 1px 2px rgba(16,24,16,.06), 0 1px 3px rgba(16,24,16,.08);
+      --sombra: 0 4px 6px rgba(16,24,16,.05), 0 10px 24px rgba(16,24,16,.07);
+      --largura-max: 1000px; --altura-nav: 64px;
+      --fonte: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    *,*::before,*::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin:0; font-family:var(--fonte); color:var(--texto); background:var(--cinza-claro); line-height:1.6; font-size:16px; -webkit-font-smoothing:antialiased; }
+    h1,h2,h3,h4 { line-height:1.2; font-weight:800; letter-spacing:-.02em; margin:0 0 .4em; }
+    p { margin:0 0 1em; color:var(--cinza); }
+    a { color:var(--verde); text-decoration:none; }
+    img,svg { display:block; max-width:100%; }
+    :focus-visible { outline:3px solid var(--azul); outline-offset:2px; border-radius:4px; }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    .container { width:100%; max-width:var(--largura-max); margin:0 auto; padding:0 24px; }
+
+    /* Topbar */
+    .topbar { position:sticky; top:0; z-index:100; height:var(--altura-nav); background:rgba(255,255,255,.94); backdrop-filter:saturate(180%) blur(10px); border-bottom:1px solid var(--borda); }
+    .topbar .container { height:100%; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .marca { display:inline-flex; align-items:center; gap:10px; font-weight:800; font-size:1.1rem; color:var(--texto); }
+    .marca .emblema { width:38px; height:38px; flex:none; }
+    .marca b { color:var(--verde); }
+    .link-voltar { font-weight:700; font-size:.92rem; color:var(--cinza); display:inline-flex; align-items:center; gap:7px; }
+    .link-voltar:hover { color:var(--verde-escuro); }
+
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; font-family:inherit; font-size:.95rem; font-weight:700; line-height:1; padding:13px 20px; border-radius:var(--raio-sm); border:2px solid transparent; cursor:pointer; transition:transform .12s ease, background .2s ease, box-shadow .2s ease, border-color .2s ease; white-space:nowrap; }
+    .btn:active { transform:translateY(1px); }
+    .btn-primario { background:var(--verde); color:#fff; box-shadow:var(--sombra-sm); }
+    .btn-primario:hover { background:var(--verde-escuro); box-shadow:var(--sombra); }
+    .btn-contorno { background:#fff; color:var(--verde-escuro); border-color:var(--borda); }
+    .btn-contorno:hover { border-color:var(--verde); background:var(--verde-claro); }
+    .btn-add { background:var(--teal-claro); color:var(--teal-escuro); border:2px dashed #8fd6c2; }
+    .btn-add:hover { background:var(--teal); color:#fff; border-color:var(--teal); }
+
+    /* Intro */
+    .intro { padding:34px 0 8px; }
+    .intro h1 { font-size:clamp(1.6rem,3.6vw,2.2rem); }
+    .intro p { max-width:740px; }
+    .intro .selo { display:inline-flex; align-items:center; gap:8px; font-size:.82rem; font-weight:700; color:var(--teal-escuro); background:var(--teal-claro); border:1px solid #b8e6d7; padding:6px 13px; border-radius:999px; margin-bottom:14px; }
+
+    main { padding:16px 0 60px; }
+
+    /* Status banner */
+    .status { display:none; align-items:flex-start; gap:12px; border-radius:var(--raio-sm); padding:14px 16px; font-weight:600; margin-bottom:20px; }
+    .status.visivel { display:flex; }
+    .status.ok { background:var(--verde-claro); border:1px solid #bcdfc0; color:var(--verde-escuro); }
+    .status.erro { background:#fbe3e3; border:1px solid #f1b7b7; color:#a01818; }
+    .status svg { width:22px; height:22px; flex:none; margin-top:1px; }
+
+    /* Blocos / fieldsets */
+    .bloco { background:#fff; border:0; border-radius:var(--raio); box-shadow:var(--sombra-sm); padding:24px; margin:0 0 20px; }
+    .bloco.destaque { background:linear-gradient(135deg,var(--teal-claro),#fff 72%); box-shadow:var(--sombra); }
+    .bloco-topo { display:flex; align-items:center; gap:12px; margin-bottom:6px; }
+    .bloco-topo .tag { width:12px; height:12px; border-radius:4px; flex:none; }
+    .bloco legend, .bloco-titulo { font-size:1.15rem; font-weight:800; letter-spacing:-.01em; padding:0; }
+    .bloco .ajuda { font-size:.9rem; color:var(--cinza); margin:0 0 18px; }
+
+    .campos-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .campo { display:flex; flex-direction:column; gap:6px; }
+    .campo.total { grid-column:1 / -1; }
+    .campo label { font-weight:600; font-size:.9rem; }
+    .campo label .obrig { color:#c62828; }
+    .campo label .op { font-weight:500; color:var(--cinza); }
+    .campo input, .campo textarea {
+      font-family:inherit; font-size:1rem; padding:11px 13px; border:1px solid var(--borda); border-radius:var(--raio-sm);
+      background:#fff; color:var(--texto); transition:border-color .15s ease, box-shadow .15s ease; width:100%;
+    }
+    .campo textarea { resize:vertical; min-height:90px; }
+    .campo input:focus, .campo textarea:focus { border-color:var(--verde); box-shadow:0 0 0 3px var(--verde-claro); outline:none; }
+    .campo.erro input { border-color:#c62828; box-shadow:0 0 0 3px #fbe3e3; }
+    .campo .msg { font-size:.8rem; color:#c62828; font-weight:600; min-height:.9em; }
+
+    /* Período (multi-mês / multi-ano) */
+    .periodo-entrada { display:grid; grid-template-columns:1fr; gap:8px; max-width:420px; margin-bottom:16px; }
+    .periodo-entrada label { font-weight:600; font-size:.9rem; }
+    .periodo-entrada input { font-family:inherit; font-size:1rem; padding:11px 13px; border:1px solid var(--borda); border-radius:var(--raio-sm); background:#fff; width:100%; }
+    .periodo-entrada input:focus { border-color:var(--teal); box-shadow:0 0 0 3px var(--teal-claro); outline:none; }
+    .periodos-lista { display:flex; flex-wrap:wrap; gap:10px; margin-top:4px; }
+    .periodos-vazio { font-size:.9rem; color:var(--cinza); margin:4px 0 0; }
+    .periodo-chip { display:inline-flex; align-items:center; gap:9px; background:#fff; border:1px solid #bcdfc0; border-radius:999px; padding:6px 8px 6px 14px; font-size:.9rem; box-shadow:var(--sombra-sm); }
+    .periodo-chip .pc-label { font-weight:800; color:var(--verde-escuro); }
+    .periodo-chip .pc-n { color:var(--cinza); font-size:.78rem; }
+    .periodo-chip .pc-btn { font-family:inherit; font-size:.78rem; font-weight:700; background:#fff; color:var(--verde-escuro); border:1px solid #bcdfc0; border-radius:999px; padding:4px 10px; cursor:pointer; }
+    .periodo-chip .pc-btn:hover { background:var(--verde); color:#fff; border-color:var(--verde); }
+    .periodo-chip .pc-rem { color:#a01818; border-color:#f1b7b7; }
+    .periodo-chip .pc-rem:hover { background:#c62828; color:#fff; border-color:#c62828; }
+
+    /* Linhas de consumo (escopos) */
+    .itens { display:grid; gap:2px; }
+    .item { display:grid; grid-template-columns:1fr 210px; align-items:center; gap:16px; padding:10px 0; border-top:1px dashed var(--borda); }
+    .item:first-child { border-top:none; }
+    .item .rot { font-size:.96rem; font-weight:600; }
+
+    /* Campo numérico com a unidade AO LADO do input (sem sobreposição) */
+    .num-un { display:flex; align-items:center; gap:9px; }
+    .num-un input {
+      flex:1 1 auto; min-width:0; width:100%; text-align:right;
+      font-family:inherit; font-size:1rem; padding:11px 13px;
+      border:1px solid var(--borda); border-radius:var(--raio-sm);
+      background:#fff; color:var(--texto);
+      transition:border-color .15s ease, box-shadow .15s ease;
+      -moz-appearance:textfield;
+    }
+    .num-un input::-webkit-outer-spin-button,
+    .num-un input::-webkit-inner-spin-button { -webkit-appearance:none; margin:0; }
+    .num-un input:focus { border-color:var(--verde); box-shadow:0 0 0 3px var(--verde-claro); outline:none; }
+    .num-un .un { flex:none; min-width:46px; font-size:.85rem; color:var(--cinza); font-weight:600; white-space:nowrap; }
+
+    /* Campo de texto avulso numa linha de item (ex.: tipo do gás refrigerante) */
+    .item > input[type="text"] {
+      width:100%; font-family:inherit; font-size:1rem; padding:11px 13px;
+      border:1px solid var(--borda); border-radius:var(--raio-sm); background:#fff; color:var(--texto);
+      transition:border-color .15s ease, box-shadow .15s ease;
+    }
+    .item > input[type="text"]:focus { border-color:var(--verde); box-shadow:0 0 0 3px var(--verde-claro); outline:none; }
+
+    /* Fixação */
+    .fix { display:grid; grid-template-columns:1.1fr 160px 1.3fr; align-items:center; gap:16px; padding:10px 0; border-top:1px dashed var(--borda); }
+    .fix:first-child { border-top:none; }
+    .fix .rot { font-size:.96rem; font-weight:600; }
+    .fix input[type="text"] {
+      width:100%; font-family:inherit; font-size:.98rem; padding:11px 12px;
+      border:1px solid var(--borda); border-radius:var(--raio-sm); background:#fff; color:var(--texto);
+      transition:border-color .15s ease, box-shadow .15s ease;
+    }
+    .fix input[type="text"]:focus { border-color:var(--verde); box-shadow:0 0 0 3px var(--verde-claro); outline:none; }
+
+    .barra-acoes { display:flex; gap:14px; flex-wrap:wrap; align-items:center; margin-top:6px; }
+    .nota-privacidade { font-size:.84rem; color:var(--cinza); margin:14px 0 0; }
+    .nota-privacidade strong { color:var(--texto); }
+
+    @media (max-width: 720px) {
+      .campos-grid { grid-template-columns:1fr; }
+      .item { grid-template-columns:1fr 160px; gap:12px; }
+      .fix { grid-template-columns:1fr; gap:8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="container">
+      <a class="marca" href="index.html" aria-label="Carbona — início">
+        <span class="emblema" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="anel" x1="6" y1="10" x2="38" y2="40" gradientUnits="userSpaceOnUse"><stop stop-color="#2E7D32"/><stop offset="1" stop-color="#38B08C"/></linearGradient></defs>
+            <circle cx="22" cy="24" r="15" stroke="url(#anel)" stroke-width="4.4" fill="none"/>
+            <path d="M22 31.2c-4.3 0-7.6-3.3-7.6-7.5 0-3.5 2.5-6.7 7.6-8.7 5.1 2 7.6 5.2 7.6 8.7 0 4.2-3.3 7.5-7.6 7.5Z" fill="#2E7D32"/>
+            <path d="M22 16.4v13.4" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+            <g fill="#2f3a45"><circle cx="37.5" cy="17.5" r="3.4"/><circle cx="43.5" cy="13.2" r="2.3"/><circle cx="43.6" cy="22.4" r="2.3"/></g>
+            <g stroke="#2f3a45" stroke-width="1.7"><line x1="37.5" y1="17.5" x2="43.5" y2="13.2"/><line x1="37.5" y1="17.5" x2="43.6" y2="22.4"/></g>
+          </svg>
+        </span>
+        <span>Carbon<b>a</b></span>
+      </a>
+      <a href="index.html" class="link-voltar">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+        Voltar ao site
+      </a>
+    </div>
+  </header>
+
+  <section class="intro">
+    <div class="container">
+      <span class="selo">Kit de Coleta online</span>
+      <h1>Preencha os dados da sua operação</h1>
+      <p>
+        Informe os consumos do período e as áreas de fixação de carbono. <strong>Preencha só o que se aplica.</strong>
+        Precisa enviar <strong>vários meses ou anos</strong>? Dá sim: preencha um período, dê um nome a ele
+        (ex.: <em>2024</em> ou <em>Jan/2025</em>), clique em <strong>Adicionar período</strong> e repita. Os campos ficam
+        salvos neste navegador enquanto você preenche.
+      </p>
+    </div>
+  </section>
+
+  <main>
+    <div class="container">
+
+      <div class="status" id="status" role="status"></div>
+
+      <form id="coleta-form" novalidate>
+        <div id="form-render"></div>
+
+        <div class="bloco">
+          <div class="barra-acoes">
+            <button type="button" class="btn btn-add" id="btn-add-periodo">+ Adicionar período</button>
+            <button type="submit" class="btn btn-primario">Enviar dados para a Carbona</button>
+            <button type="button" class="btn btn-contorno" id="btn-txt">Baixar resumo (.txt)</button>
+            <button type="button" class="btn btn-contorno" id="btn-limpar">Limpar tudo</button>
+          </div>
+          <p class="nota-privacidade">
+            <strong>Vários períodos:</strong> use “Adicionar período” para salvar cada mês/ano e limpar os campos para o próximo.
+            <strong>Envio:</strong> ao enviar, abrimos seu app de e-mail com todos os períodos organizados, endereçado à Carbona
+            — é só confirmar. Para muitos períodos, o botão “Baixar resumo (.txt)” garante que nada se perca.
+          </p>
+        </div>
+      </form>
+
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      "use strict";
+
+      /* =========================================================
+         CONFIGURAÇÃO DE ENVIO
+         - "email"     : abre o app de e-mail do visitante (mailto). Funciona sem servidor.
+         - "web3forms" : envio automático para o seu e-mail (sem abrir app). Crie uma conta
+                         grátis em https://web3forms.com, copie a Access Key e cole abaixo.
+         ========================================================= */
+      var MODO_ENVIO = "email";          // "email" | "web3forms"
+      var WEB3FORMS_KEY = "";            // ex.: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+      var DESTINO_EMAIL = "leonilsonk@gmail.com";
+      var CHAVE_LS = "carbona_coleta_v1";
+
+      /* ------------------- Estrutura do Kit (igual à planilha) ------------------- */
+      var EMPRESA = [
+        { id: "razao", label: "Razão social", tipo: "text", req: true },
+        { id: "fantasia", label: "Nome fantasia", tipo: "text" },
+        { id: "cnpj", label: "CNPJ", tipo: "text", ph: "00.000.000/0000-00" },
+        { id: "setor", label: "Setor / atividade principal", tipo: "text" },
+        { id: "anobase", label: "Ano-base / anos do inventário", tipo: "text", ph: "ex.: 2025 (ou 2023-2025)" },
+        { id: "unidades", label: "Nº de unidades / plantas", tipo: "number" },
+        { id: "funcionarios", label: "Nº de funcionários", tipo: "number" },
+        { id: "faturamento", label: "Faturamento anual (R$)", tipo: "number" },
+        { id: "unprod", label: "Unidade de produto", tipo: "text", ph: "ex.: t, un, m³" },
+        { id: "producao", label: "Produção no período (para intensidade)", tipo: "number" },
+        { id: "responsavel", label: "Responsável pelo preenchimento", tipo: "text", req: true },
+        { id: "email", label: "E-mail para retorno", tipo: "email", req: true },
+        { id: "telefone", label: "Telefone / WhatsApp", tipo: "text" }
+      ];
+
+      var ESCOPOS = [
+        { titulo: "Escopo 1 — Emissões diretas", cor: "var(--verde)", ajuda: "Combustíveis queimados na operação e gases refrigerantes.", itens: [
+          { id: "e1_diesel", label: "Diesel", un: "L" },
+          { id: "e1_gasolina", label: "Gasolina", un: "L" },
+          { id: "e1_etanol", label: "Etanol (hidratado)", un: "L" },
+          { id: "e1_glp", label: "GLP", un: "kg" },
+          { id: "e1_gn", label: "Gás natural", un: "m³" },
+          { id: "e1_gerador", label: "Óleo diesel de geradores", un: "L" },
+          { id: "e1_lenha", label: "Lenha / biomassa", un: "t" },
+          { id: "e1_refrig", label: "Gases refrigerantes (recarga)", un: "kg" },
+          { id: "e1_refrig_tipo", label: "Tipo do gás refrigerante", tipo: "text", ph: "ex.: R-410A" }
+        ]},
+        { titulo: "Escopo 2 — Energia", cor: "var(--azul)", ajuda: "Energia adquirida de terceiros.", itens: [
+          { id: "e2_energia", label: "Energia elétrica adquirida (rede)", un: "kWh" },
+          { id: "e2_energia2", label: "Energia elétrica — outra unidade", un: "kWh" },
+          { id: "e2_renovavel", label: "Energia renovável (I-REC / PPA)", un: "kWh" },
+          { id: "e2_vapor", label: "Vapor / calor / frio adquirido", un: "kWh/GJ" }
+        ]},
+        { titulo: "Escopo 3 — Emissões indiretas", cor: "var(--amarelo)", ajuda: "Cadeia de valor: resíduos, transporte, viagens e deslocamentos.", itens: [
+          { id: "e3_aterro", label: "Resíduos enviados a aterro", un: "t" },
+          { id: "e3_recicla", label: "Resíduos reciclados / compostados", un: "t" },
+          { id: "e3_efluente", label: "Efluentes tratados", un: "m³" },
+          { id: "e3_frete", label: "Fretes rodoviários (contratados)", un: "t.km" },
+          { id: "e3_modais", label: "Transporte — outros modais", un: "t.km" },
+          { id: "e3_aereo", label: "Viagens aéreas a negócios", un: "km" },
+          { id: "e3_rodo", label: "Viagens rodoviárias a negócios", un: "km" },
+          { id: "e3_desloc", label: "Deslocamento casa-trabalho (equipe)", un: "km" },
+          { id: "e3_agua", label: "Água consumida", un: "m³" }
+        ]}
+      ];
+
+      var FIXACAO = [
+        { id: "fx_nativas", label: "Reflorestamento com nativas" },
+        { id: "fx_plantada", label: "Floresta plantada (ex.: eucalipto)" },
+        { id: "fx_saf", label: "Sistemas agroflorestais (SAF)" },
+        { id: "fx_pastagem", label: "Recuperação de pastagem degradada" },
+        { id: "fx_nativa_reg", label: "Vegetação nativa em regeneração (APP/RL)" },
+        { id: "fx_solo", label: "Carbono no solo (plantio direto)" }
+      ];
+
+      /* ------------------------------ Helpers ---------------------------------- */
+      function escapeHtml(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+      function get(id) { var e = document.getElementById("f_" + id); return e ? e.value.trim() : ""; }
+      function setVal(id, v) { var e = document.getElementById("f_" + id); if (e) e.value = v; }
+
+      /* ------------------------------ Renderização ------------------------------ */
+      function campoInput(c) {
+        var tipo = c.tipo || "text";
+        var attrs = 'id="f_' + c.id + '" name="' + c.id + '"';
+        if (tipo === "number") attrs += ' type="number" inputmode="decimal" step="any" min="0"';
+        else if (tipo === "email") attrs += ' type="email" autocomplete="email"';
+        else attrs += ' type="text"';
+        if (c.ph) attrs += ' placeholder="' + c.ph + '"';
+        var op = c.req ? ' <span class="obrig" aria-hidden="true">*</span>' : ' <span class="op">(opcional)</span>';
+        return '<div class="campo' + (c.total ? " total" : "") + '">' +
+          '<label for="f_' + c.id + '">' + c.label + op + '</label>' +
+          '<input ' + attrs + ' />' +
+          (c.req ? '<span class="msg" id="msg_' + c.id + '"></span>' : '') +
+          '</div>';
+      }
+
+      var render = document.getElementById("form-render");
+      var html = "";
+
+      // Bloco: Dados da empresa
+      html += '<fieldset class="bloco">' +
+        '<div class="bloco-topo"><span class="tag" style="background:var(--teal)"></span><legend class="bloco-titulo">Dados da empresa</legend></div>' +
+        '<p class="ajuda">Preenchidos uma vez, valem para todos os períodos. Campos com <span style="color:#c62828">*</span> são obrigatórios.</p>' +
+        '<div class="campos-grid">' + EMPRESA.map(campoInput).join("") + '</div>' +
+        '</fieldset>';
+
+      // Bloco: Períodos (multi-mês / multi-ano)
+      html += '<fieldset class="bloco destaque">' +
+        '<div class="bloco-topo"><span class="tag" style="background:var(--teal)"></span><legend class="bloco-titulo">Períodos enviados</legend></div>' +
+        '<p class="ajuda">Vai mandar mais de um mês ou ano? Preencha os consumos abaixo, nomeie o período e clique em <strong>“+ Adicionar período”</strong> (no fim da página). Para um período único, basta preencher e enviar.</p>' +
+        '<div class="periodo-entrada">' +
+        '<label for="f_periodo_label">Nome do período que você está preenchendo agora</label>' +
+        '<input type="text" id="f_periodo_label" name="periodo_label" placeholder="ex.: 2024  •  Jan/2025  •  1º trimestre/2025" />' +
+        '</div>' +
+        '<div class="periodos-lista" id="periodos-lista"></div>' +
+        '</fieldset>';
+
+      // Blocos: escopos
+      ESCOPOS.forEach(function (g) {
+        var linhas = g.itens.map(function (it) {
+          if (it.tipo === "text") {
+            return '<div class="item"><span class="rot">' + it.label + '</span>' +
+              '<input type="text" id="f_' + it.id + '" name="' + it.id + '" placeholder="' + (it.ph || "") + '" /></div>';
+          }
+          return '<div class="item"><span class="rot">' + it.label + '</span>' +
+            '<span class="num-un"><input type="number" inputmode="decimal" step="any" min="0" id="f_' + it.id + '" name="' + it.id + '" placeholder="0" /><span class="un">' + (it.un || "") + '</span></span></div>';
+        }).join("");
+        html += '<fieldset class="bloco">' +
+          '<div class="bloco-topo"><span class="tag" style="background:' + g.cor + '"></span><legend class="bloco-titulo">' + g.titulo + '</legend></div>' +
+          '<p class="ajuda">' + g.ajuda + ' Informe o total do período.</p>' +
+          '<div class="itens">' + linhas + '</div>' +
+          '</fieldset>';
+      });
+
+      // Bloco: fixação
+      var fixLinhas = FIXACAO.map(function (it) {
+        return '<div class="fix"><span class="rot">' + it.label + '</span>' +
+          '<span class="num-un"><input type="number" inputmode="decimal" step="any" min="0" id="f_' + it.id + '" name="' + it.id + '" placeholder="0" /><span class="un">ha</span></span>' +
+          '<input type="text" id="f_' + it.id + '_det" name="' + it.id + '_det" placeholder="Espécie / idade / manejo (opcional)" /></div>';
+      }).join("");
+      html += '<fieldset class="bloco">' +
+        '<div class="bloco-topo"><span class="tag" style="background:var(--teal)"></span><legend class="bloco-titulo">Fixação de carbono — remoções</legend></div>' +
+        '<p class="ajuda">Áreas que removem e armazenam carbono. Informe a área (ha) e, se quiser, um detalhe. Os fatores são aplicados pela Carbona.</p>' +
+        '<div class="itens">' + fixLinhas + '</div>' +
+        '</fieldset>';
+
+      // Bloco: observações
+      html += '<fieldset class="bloco">' +
+        '<div class="bloco-topo"><span class="tag" style="background:var(--cinza)"></span><legend class="bloco-titulo">Observações gerais</legend></div>' +
+        '<div class="campos-grid"><div class="campo total">' +
+        '<label for="f_obs">Algo mais que devemos saber? Outras fontes, dúvidas, contexto <span class="op">(opcional)</span></label>' +
+        '<textarea id="f_obs" name="obs" placeholder="Ex.: temos outra fonte de emissão não listada, sazonalidade, metas..."></textarea>' +
+        '</div></div>' +
+        '</fieldset>';
+
+      render.innerHTML = html;
+
+      /* ------------------------ Listas de campos ------------------------ */
+      function idsConsumo() {
+        var ids = [];
+        ESCOPOS.forEach(function (g) { g.itens.forEach(function (it) { ids.push(it.id); }); });
+        FIXACAO.forEach(function (it) { ids.push(it.id); ids.push(it.id + "_det"); });
+        return ids;
+      }
+      var IDS_CONSUMO = idsConsumo();
+      function idsTodos() {
+        var ids = EMPRESA.map(function (c) { return c.id; });
+        ids.push("periodo_label");
+        ids = ids.concat(IDS_CONSUMO);
+        ids.push("obs");
+        return ids;
+      }
+      var TODOS = idsTodos();
+
+      /* ------------------------- Períodos (estado) ----------------------------- */
+      var periodos = []; // [{ label:"2024", dados:{ e1_diesel:"1000", ... } }]
+
+      function snapshotConsumo() {
+        var d = {};
+        IDS_CONSUMO.forEach(function (id) { var v = get(id); if (v) d[id] = v; });
+        return d;
+      }
+      function temConsumo(d) { for (var k in d) { if (d.hasOwnProperty(k) && d[k]) return true; } return false; }
+      function limparConsumo() {
+        IDS_CONSUMO.forEach(function (id) { setVal(id, ""); });
+        setVal("periodo_label", "");
+      }
+
+      function renderPeriodos() {
+        var cont = document.getElementById("periodos-lista");
+        if (!periodos.length) {
+          cont.innerHTML = '<p class="periodos-vazio">Nenhum período adicionado ainda. Se for enviar só um, ignore isto e preencha abaixo.</p>';
+          return;
+        }
+        cont.innerHTML = periodos.map(function (p, i) {
+          var n = 0; for (var k in p.dados) { if (p.dados.hasOwnProperty(k) && p.dados[k]) n++; }
+          return '<span class="periodo-chip"><span class="pc-label">' + escapeHtml(p.label) + '</span>' +
+            '<span class="pc-n">' + n + ' dado(s)</span>' +
+            '<button type="button" class="pc-btn" data-edit="' + i + '">Editar</button>' +
+            '<button type="button" class="pc-btn pc-rem" data-rem="' + i + '">Remover</button></span>';
+        }).join("");
+      }
+
+      function addPeriodo() {
+        var label = get("periodo_label");
+        var dados = snapshotConsumo();
+        if (!temConsumo(dados)) { mostrarStatus("erro", "Preencha ao menos um consumo deste período antes de adicionar."); return; }
+        if (!label) { label = "Período " + (periodos.length + 1); }
+        periodos.push({ label: label, dados: dados });
+        limparConsumo();
+        renderPeriodos();
+        salvar();
+        elStatus.className = "status";
+        var bloco = document.getElementById("periodos-lista");
+        if (bloco) bloco.scrollIntoView({ behavior: "smooth", block: "center" });
+        mostrarStatus("ok", 'Período “' + label + '” adicionado. Os campos foram limpos para você inserir o próximo mês/ano.');
+      }
+      function editarPeriodo(i) {
+        var p = periodos[i]; if (!p) return;
+        if (temConsumo(snapshotConsumo()) && !confirm("Carregar \u201C" + p.label + "\u201D vai substituir os dados que estão no formulário agora. Continuar?")) return;
+        limparConsumo();
+        setVal("periodo_label", p.label);
+        for (var id in p.dados) { if (p.dados.hasOwnProperty(id)) setVal(id, p.dados[id]); }
+        periodos.splice(i, 1);
+        renderPeriodos(); salvar();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      function removerPeriodo(i) { periodos.splice(i, 1); renderPeriodos(); salvar(); }
+
+      /* ------------------------------ Persistência ------------------------------ */
+      function salvar() {
+        var campos = {};
+        TODOS.forEach(function (id) { var v = get(id); if (v) campos[id] = v; });
+        try { localStorage.setItem(CHAVE_LS, JSON.stringify({ campos: campos, periodos: periodos })); } catch (e) {}
+      }
+      function carregar() {
+        var d = null;
+        try { d = JSON.parse(localStorage.getItem(CHAVE_LS)); } catch (e) { d = null; }
+        if (!d) return;
+        var campos = d.campos || d;
+        TODOS.forEach(function (id) { if (campos[id] != null) setVal(id, campos[id]); });
+        if (d.periodos && d.periodos.length) periodos = d.periodos;
+      }
+      carregar();
+      renderPeriodos();
+      document.getElementById("coleta-form").addEventListener("input", salvar);
+
+      /* ------------------------------ Validação -------------------------------- */
+      function validarEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+      function validar() {
+        var ok = true, primeiro = null;
+        EMPRESA.forEach(function (c) {
+          if (!c.req) return;
+          var e = document.getElementById("f_" + c.id);
+          var grupo = e.closest(".campo");
+          var msg = document.getElementById("msg_" + c.id);
+          var val = e.value.trim();
+          var valido = c.tipo === "email" ? validarEmail(val) : val.length >= 2;
+          if (!valido) {
+            ok = false; grupo.classList.add("erro");
+            if (msg) msg.textContent = c.tipo === "email" ? "Informe um e-mail válido." : "Campo obrigatório.";
+            if (!primeiro) primeiro = e;
+          } else { grupo.classList.remove("erro"); if (msg) msg.textContent = ""; }
+        });
+        return { ok: ok, primeiro: primeiro };
+      }
+
+      /* --------------------- Lista final de períodos + texto ------------------- */
+      function listaPeriodosFinal() {
+        var lista = periodos.slice();
+        var atual = snapshotConsumo();
+        if (temConsumo(atual)) {
+          lista.push({ label: get("periodo_label") || (lista.length ? "Período " + (lista.length + 1) : "Período único"), dados: atual });
+        }
+        return lista;
+      }
+      function blocoConsumo(dados) {
+        var L = [];
+        ESCOPOS.forEach(function (g) {
+          var linhas = g.itens.filter(function (it) { return dados[it.id]; });
+          if (!linhas.length) return;
+          L.push("  " + g.titulo.toUpperCase());
+          linhas.forEach(function (it) { L.push("    - " + it.label + ": " + dados[it.id] + (it.un ? " " + it.un : "")); });
+        });
+        var fx = FIXACAO.filter(function (it) { return dados[it.id] || dados[it.id + "_det"]; });
+        if (fx.length) {
+          L.push("  FIXAÇÃO / REMOÇÕES");
+          fx.forEach(function (it) {
+            var p = [];
+            if (dados[it.id]) p.push(dados[it.id] + " ha");
+            if (dados[it.id + "_det"]) p.push(dados[it.id + "_det"]);
+            L.push("    - " + it.label + ": " + p.join(" — "));
+          });
+        }
+        return L;
+      }
+      function montarTexto(lista) {
+        var L = [];
+        L.push("KIT DE COLETA DE DADOS — INVENTÁRIO DE CARBONO (Carbona)");
+        L.push("Enviado em: " + new Date().toLocaleString("pt-BR"));
+        L.push("========================================================");
+        L.push("");
+        L.push("== DADOS DA EMPRESA ==");
+        EMPRESA.forEach(function (c) { var v = get(c.id); if (v) L.push(c.label + ": " + v); });
+        L.push("");
+        L.push("== PERÍODOS INFORMADOS: " + lista.length + " ==");
+        lista.forEach(function (p) {
+          L.push("");
+          L.push("=========== PERÍODO: " + p.label + " ===========");
+          var bc = blocoConsumo(p.dados);
+          if (bc.length) { for (var i = 0; i < bc.length; i++) L.push(bc[i]); }
+          else L.push("  (sem consumos informados)");
+        });
+        if (get("obs")) { L.push(""); L.push("== OBSERVAÇÕES =="); L.push(get("obs")); }
+        L.push(""); L.push("--------------------------------------------------------");
+        L.push("Enviado pelo Kit de Coleta online — carbona.com.br");
+        return L.join("\n");
+      }
+
+      /* ------------------------------ Status UI -------------------------------- */
+      var elStatus = document.getElementById("status");
+      function mostrarStatus(tipo, texto) {
+        elStatus.className = "status visivel " + tipo;
+        var icone = tipo === "ok"
+          ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>'
+          : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>';
+        elStatus.innerHTML = icone + "<span>" + texto + "</span>";
+        elStatus.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      /* -------------------------------- Envio ---------------------------------- */
+      function baixarTxt() {
+        var lista = listaPeriodosFinal();
+        if (!lista.length) { mostrarStatus("erro", "Preencha ao menos um período antes de baixar."); return; }
+        var blob = new Blob([montarTexto(lista)], { type: "text/plain;charset=utf-8" });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement("a");
+        var nome = (get("razao") || get("fantasia") || "coleta").replace(/[^\wÀ-ÿ]+/g, "-").toLowerCase();
+        a.href = url; a.download = "coleta-carbono-" + nome + ".txt";
+        document.body.appendChild(a); a.click();
+        setTimeout(function () { document.body.removeChild(a); URL.revokeObjectURL(url); }, 0);
+      }
+
+      function enviarPorEmail(texto) {
+        var assunto = "Kit de Coleta — " + (get("razao") || get("responsavel") || "nova empresa");
+        var mailto = "mailto:" + DESTINO_EMAIL + "?subject=" + encodeURIComponent(assunto) + "&body=" + encodeURIComponent(texto);
+        window.location.href = mailto;
+        var aviso = texto.length > 1600
+          ? "Abrimos seu e-mail com os dados. Como você enviou bastante informação, alguns apps de e-mail podem cortar o texto — recomendamos também usar \u201CBaixar resumo (.txt)\u201D e anexar o arquivo."
+          : "Abrimos seu aplicativo de e-mail com todos os períodos preenchidos — é só clicar em enviar. Se preferir, use \u201CBaixar resumo (.txt)\u201D.";
+        mostrarStatus("ok", aviso);
+      }
+
+      function enviarWeb3(texto, botao) {
+        var payload = {
+          access_key: WEB3FORMS_KEY,
+          subject: "Kit de Coleta — " + (get("razao") || get("responsavel") || "nova empresa"),
+          from_name: "Kit de Coleta — site Carbona",
+          replyto: get("email") || "",
+          message: texto
+        };
+        if (botao) botao.disabled = true;
+        fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify(payload)
+        }).then(function (r) { return r.json(); }).then(function (j) {
+          if (botao) botao.disabled = false;
+          if (j && j.success) {
+            mostrarStatus("ok", "Dados enviados para a Carbona! Recebemos suas informações e retornamos em seguida.");
+            try { localStorage.removeItem(CHAVE_LS); } catch (e) {}
+          } else {
+            mostrarStatus("erro", "Não foi possível enviar automaticamente. Baixe o resumo (.txt) e nos envie por e-mail.");
+          }
+        }).catch(function () {
+          if (botao) botao.disabled = false;
+          mostrarStatus("erro", "Falha de conexão no envio automático. Baixe o resumo (.txt) e nos envie por e-mail.");
+        });
+      }
+
+      var form = document.getElementById("coleta-form");
+      form.addEventListener("submit", function (ev) {
+        ev.preventDefault();
+        var v = validar();
+        if (!v.ok) {
+          mostrarStatus("erro", "Preencha os campos obrigatórios (razão social, responsável e e-mail) para enviar.");
+          if (v.primeiro) v.primeiro.focus();
+          return;
+        }
+        var lista = listaPeriodosFinal();
+        if (!lista.length) {
+          mostrarStatus("erro", "Informe os consumos de ao menos um período antes de enviar.");
+          return;
+        }
+        var texto = montarTexto(lista);
+        if (MODO_ENVIO === "web3forms" && WEB3FORMS_KEY) enviarWeb3(texto, ev.submitter || document.querySelector('#coleta-form button[type="submit"]'));
+        else enviarPorEmail(texto);
+      });
+
+      document.getElementById("btn-add-periodo").addEventListener("click", addPeriodo);
+      document.getElementById("btn-txt").addEventListener("click", baixarTxt);
+      document.getElementById("btn-limpar").addEventListener("click", function () {
+        if (!confirm("Limpar todos os campos e períodos adicionados?")) return;
+        TODOS.forEach(function (id) { setVal(id, ""); });
+        periodos = [];
+        renderPeriodos();
+        try { localStorage.removeItem(CHAVE_LS); } catch (e) {}
+        elStatus.className = "status";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+      document.getElementById("periodos-lista").addEventListener("click", function (ev) {
+        var b = ev.target;
+        if (b.dataset && b.dataset.edit != null) editarPeriodo(parseInt(b.dataset.edit, 10));
+        else if (b.dataset && b.dataset.rem != null) removerPeriodo(parseInt(b.dataset.rem, 10));
+      });
+    })();
+  </script>
+</body>
+</html>
