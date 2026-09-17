@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Relatório de Carbono — Cascavel Express | Carbona</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/png" href="Generatedimage_1789424126672.png" />
+  <style>
+    :root{
+      --verde:#2e7d32;--verde-escuro:#1b5e20;--verde-claro:#e8f2e9;--azul:#1565c0;--azul-claro:#e7f0fb;
+      --amarelo:#f9a825;--amarelo-claro:#fef3d8;--amarelo-escuro:#7a5300;--teal:#0f9d78;--teal-escuro:#0b7a5e;--teal-claro:#e2f6f0;
+      --vermelho:#c62828;--vermelho-claro:#fbe3e3;--texto:#1a1a1a;--cinza:#555;--cinza-claro:#f5f7f5;--borda:#e2e8e2;
+      --raio:14px;--sombra-sm:0 1px 2px rgba(16,24,16,.06),0 1px 3px rgba(16,24,16,.08);--sombra:0 4px 6px rgba(16,24,16,.05),0 10px 24px rgba(16,24,16,.07);
+      --fonte:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:var(--fonte);color:var(--texto);background:var(--cinza-claro);line-height:1.55;font-size:15.5px}
+    h1,h2,h3{line-height:1.2;font-weight:800;letter-spacing:-.02em;margin:0 0 .4em}
+    p{margin:0 0 .9em;color:#333}a{color:var(--verde);text-decoration:none}
+    .container{max-width:900px;margin:0 auto;padding:0 24px}
+    .topbar{position:sticky;top:0;z-index:50;height:62px;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--borda)}
+    .topbar .container{height:100%;display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .tb-logo{height:38px;width:auto}
+    .btn{display:inline-flex;align-items:center;gap:8px;font-family:inherit;font-size:.92rem;font-weight:700;padding:10px 15px;border-radius:9px;border:2px solid transparent;cursor:pointer}
+    .btn-primario{background:var(--verde);color:#fff}.btn-contorno{background:#fff;color:var(--verde-escuro);border-color:var(--borda)}
+    .link-voltar{font-weight:700;font-size:.9rem;color:var(--cinza)}
+    .doc{max-width:900px;margin:22px auto 60px;background:#fff;border:1px solid var(--borda);border-radius:16px;box-shadow:var(--sombra);overflow:hidden}
+    .capa{padding:34px 40px 26px;background:radial-gradient(760px 300px at 92% -25%,var(--azul-claro),transparent 60%),linear-gradient(180deg,var(--verde-claro),#fff 80%);border-bottom:1px solid var(--borda)}
+    .capa-logo{height:96px;width:auto;margin-bottom:16px}
+    .aviso{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--amarelo-escuro);background:var(--amarelo-claro);border:1px solid #f3d38a;padding:5px 12px;border-radius:999px;margin-bottom:12px}
+    .capa h1{font-size:clamp(1.5rem,3.4vw,2rem)}
+    .capa .meta{color:var(--cinza);font-weight:600;margin:0}
+    .sec{padding:26px 40px;border-bottom:1px solid var(--borda)}.sec:last-child{border-bottom:0}
+    .sec h2{font-size:1.25rem;margin:0 0 4px;display:flex;align-items:center;gap:10px}
+    .sec h2 .n{width:30px;height:30px;border-radius:50%;background:var(--verde);color:#fff;font-size:.9rem;display:inline-flex;align-items:center;justify-content:center;flex:none}
+    .sec .sub{font-size:.9rem;color:var(--cinza);margin:0 0 16px}
+    table{width:100%;border-collapse:collapse;font-size:.9rem;margin:6px 0 4px}
+    th,td{padding:9px 11px;border-top:1px solid var(--borda);text-align:left;vertical-align:top}
+    thead th{background:var(--cinza-claro);font-size:.74rem;text-transform:uppercase;letter-spacing:.03em;color:var(--cinza);border-top:0}
+    td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+    tr.tot td{font-weight:800;border-top:2px solid var(--borda);background:#fafbfa}
+    .tag{display:inline-block;font-size:.68rem;font-weight:800;padding:2px 8px;border-radius:999px;text-transform:uppercase;letter-spacing:.03em}
+    .tag.ok{background:var(--verde-claro);color:var(--verde-escuro)}.tag.est{background:var(--amarelo-claro);color:var(--amarelo-escuro)}.tag.alerta{background:var(--vermelho-claro);color:var(--vermelho)}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:6px 0}
+    .card{border:1px solid var(--borda);border-radius:12px;padding:14px;border-top:4px solid var(--verde)}
+    .card.est{border-top-color:var(--amarelo)}.card.azul{border-top-color:var(--azul)}.card.alerta{border-top-color:var(--vermelho)}
+    .card .r{font-size:.72rem;font-weight:700;color:var(--cinza);text-transform:uppercase;margin-bottom:5px}
+    .card .v{font-size:1.4rem;font-weight:800;letter-spacing:-.02em}.card .v small{font-size:.7rem;color:var(--cinza);font-weight:700}
+    .card .o{font-size:.76rem;color:var(--cinza);margin-top:4px}
+    .bar{margin:9px 0}.bar .t{display:flex;justify-content:space-between;font-size:.86rem;font-weight:600;margin-bottom:4px}
+    .bar .trilha{height:20px;background:var(--cinza-claro);border-radius:6px;overflow:hidden}
+    .bar .fill{height:100%;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;color:#fff;font-weight:800;font-size:.74rem}
+    .callout{border-radius:12px;padding:14px 16px;margin:12px 0;font-size:.92rem}
+    .callout.verde{background:var(--verde-claro);border:1px solid #bcdfc0;color:#1c4e20}
+    .callout.amarelo{background:var(--amarelo-claro);border:1px solid #f3d38a;color:#6b4a06}
+    .callout.azul{background:var(--azul-claro);border:1px solid #bcd7f5;color:#123a6b}
+    .callout.vermelho{background:var(--vermelho-claro);border:1px solid #f1b7b7;color:#7a1616}
+    ul.lista{margin:.3em 0 1em;padding-left:0;list-style:none}
+    ul.lista li{position:relative;padding-left:22px;margin-bottom:7px;font-size:.92rem}
+    ul.lista li::before{content:"";position:absolute;left:2px;top:8px;width:8px;height:8px;border-radius:2px;background:var(--verde)}
+    ul.falta li::before{background:var(--amarelo)}
+    .passos{display:grid;gap:10px;counter-reset:p}
+    .passo{position:relative;padding:12px 14px 12px 46px;border:1px solid var(--borda);border-radius:10px;font-size:.9rem}
+    .passo::before{counter-increment:p;content:counter(p);position:absolute;left:12px;top:12px;width:24px;height:24px;border-radius:50%;background:var(--verde);color:#fff;font-weight:800;font-size:.82rem;display:flex;align-items:center;justify-content:center}
+    .passo b{color:var(--texto)}
+    .duas{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .box{border:1px solid var(--borda);border-radius:12px;padding:16px}.box h3{font-size:1rem;margin:0 0 8px}
+    .fonte{font-size:.8rem;color:var(--cinza)}
+    .rodape{padding:22px 40px;background:#10240f;color:#a9c0a6;font-size:.82rem}.rodape b{color:#fff}
+    /* feedback */
+    .fb{max-width:580px}
+    .fb-label{display:block;font-weight:700;font-size:.9rem;margin:12px 0 6px}
+    .estrelas{display:flex;gap:4px}
+    .estrelas button{font-size:2rem;line-height:1;background:none;border:none;cursor:pointer;color:#d8ddd6;padding:0 3px;transition:color .12s ease;-webkit-tap-highlight-color:transparent}
+    .estrelas button.on{color:var(--amarelo)}
+    .fb textarea,.fb input{width:100%;font-family:inherit;font-size:1rem;padding:11px 13px;border:1px solid var(--borda);border-radius:9px;background:#fff;color:var(--texto)}
+    .fb textarea{min-height:92px;resize:vertical}
+    .fb textarea:focus,.fb input:focus{border-color:var(--verde);box-shadow:0 0 0 3px var(--verde-claro);outline:none}
+    .fb-acoes{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .fb-status{font-weight:700;color:var(--verde-escuro);margin:12px 0 0;min-height:1em}
+    .fb-check{display:flex;align-items:center;gap:9px;font-weight:700;font-size:.92rem;margin:18px 0 0;cursor:pointer}
+    .fb-check input{width:18px;height:18px;flex:none}
+    .fb-reembolso-campos{margin-top:10px;padding:14px 16px;border:1px dashed #e3b657;background:var(--amarelo-claro);border-radius:10px}
+    .fb-radios{display:flex;flex-wrap:wrap;gap:16px;font-size:.92rem;font-weight:600}
+    .fb-radios label{display:flex;align-items:center;gap:7px;cursor:pointer}
+    .sec.feedback{background:linear-gradient(180deg,var(--teal-claro),#fff 60%)}
+    [hidden]{display:none!important}
+    @media(max-width:760px){.cards{grid-template-columns:1fr}.duas{grid-template-columns:1fr}.sec,.capa{padding-left:22px;padding-right:22px}}
+    @page{size:A4;margin:14mm}
+    @media print{
+      body{background:#fff;font-size:11.2pt}
+      .topbar,.no-print{display:none!important}
+      .doc{box-shadow:none;border:0;margin:0;border-radius:0;max-width:none}
+      .capa,.sec{page-break-inside:avoid}.sec{padding:16px 0}.capa{padding:0 0 14px}
+      h2{page-break-after:avoid}table,.cards,.passos,.callout{page-break-inside:avoid}
+      *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar no-print">
+    <div class="container">
+      <a href="index.html"><img class="tb-logo" src="carbona-logo.png" alt="Carbona" /></a>
+      <div style="display:flex;gap:10px;align-items:center">
+        <a href="index.html" class="link-voltar">← Voltar ao site</a>
+        <button class="btn btn-contorno" id="btn-imprimir">Imprimir / PDF</button>
+        <a href="index.html#contato" class="btn btn-primario">Falar com a Carbona</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="doc">
+    <div class="capa">
+      <img class="capa-logo" src="carbona-logo.png" alt="Carbona" onerror="this.style.display='none'" />
+      <span class="aviso">Relatório preliminar • baseado nos dados enviados</span>
+      <h1>Relatório de Carbono — Cascavel Express (Brahma Express)</h1>
+      <p class="meta">Distribuição de bebidas (chope) • 2 unidades • Ano-base 2025 • Responsável: Daniel Ojaimi</p>
+    </div>
+
+    <!-- 1. Dados recebidos -->
+    <section class="sec">
+      <h2><span class="n">1</span> Dados recebidos</h2>
+      <p class="sub">O que foi informado no formulário de coleta (ano 2025).</p>
+      <table>
+        <thead><tr><th>Fonte</th><th>Escopo</th><th class="n">Quantidade</th></tr></thead>
+        <tbody>
+          <tr><td>Diesel</td><td>Escopo 1</td><td class="n">2.400 L</td></tr>
+          <tr><td>Gasolina</td><td>Escopo 1</td><td class="n">500 L</td></tr>
+          <tr><td>Gases refrigerantes R-410A (recarga)</td><td>Escopo 1</td><td class="n">2.000 kg (?)</td></tr>
+          <tr><td>Energia elétrica (2 unidades)</td><td>Escopo 2</td><td class="n">72.000 kWh</td></tr>
+          <tr><td>Fretes rodoviários (contratados)</td><td>Escopo 3</td><td class="n">1.000 t.km</td></tr>
+          <tr><td>Viagens rodoviárias a negócios</td><td>Escopo 3</td><td class="n">4.500 km</td></tr>
+          <tr><td>Deslocamento casa-trabalho (equipe)</td><td>Escopo 3</td><td class="n">3.000 km</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 2. Qualidade dos dados -->
+    <section class="sec">
+      <h2><span class="n">2</span> Checagem de qualidade dos dados</h2>
+      <p class="sub">Antes de calcular, sinalizamos pontos que precisam de confirmação (padrão profissional).</p>
+      <div class="callout vermelho"><b>Gás refrigerante = 2.000 kg de recarga:</b> é um valor fisicamente implausível para 2 unidades. Sozinho, resultaria em ~4.176 tCO₂e (por causa do altíssimo potencial de aquecimento do R-410A). Quase certamente houve erro de digitação (ex.: 20 kg, 200 kg?). <b>Confirmar é a prioridade nº 1</b> — é o dado que mais muda o resultado.</div>
+      <div class="callout amarelo"><b>Faturamento = R$ 3.350:</b> provavelmente incompleto (faltou "mil" ou "milhão"). Sem ele, não calculamos a intensidade por receita.</div>
+      <div class="callout amarelo"><b>Cobertura da frota/logística:</b> 2.400 L de diesel e 1.000 t.km de frete parecem baixos para uma distribuidora. Vale confirmar se toda a frota e as entregas estão incluídas.</div>
+    </section>
+
+    <!-- 3. Metodologia -->
+    <section class="sec">
+      <h2><span class="n">3</span> Metodologia e fatores</h2>
+      <p class="sub">Cálculo conforme GHG Protocol e IPCC (2006/2019).</p>
+      <ul class="lista">
+        <li><b>Diesel:</b> 2,68 kg CO₂e/L • <b>Gasolina:</b> 2,3 kg CO₂e/L (IPCC).</li>
+        <li><b>Gases fluorados (F-gases):</b> emissão = kg recarregados × GWP. GWP do R-410A = 2.088. É o método padrão para refrigeração.</li>
+        <li><b>Energia elétrica:</b> fator médio do SIN ≈ 0,06 tCO₂e/MWh (referência; MCTI publica mensal).</li>
+        <li><b>Transporte rodoviário:</b> frete 0,1 kg CO₂e/t.km; deslocamento de pessoas ≈ 0,17 kg CO₂e/km (carro médio).</li>
+      </ul>
+    </section>
+
+    <!-- 4. Emissoes -->
+    <section class="sec">
+      <h2><span class="n">4</span> Emissões — dois cenários</h2>
+      <p class="sub">Por causa do dado do refrigerante, mostramos o reportado (sinalizado) e um cenário corrigido, usado como base de análise.</p>
+      <div class="cards">
+        <div class="card alerta"><div class="r">Cenário reportado</div><div class="v">~4.189 <small>tCO₂e</small></div><div class="o">99% vindo do refrigerante (provável erro)</div></div>
+        <div class="card"><div class="r">Cenário corrigido*</div><div class="v">~55 <small>tCO₂e</small></div><div class="o">refrigerante ~20 kg (a confirmar)</div></div>
+        <div class="card azul"><div class="r">Escopos (corrigido)</div><div class="v">89% <small>Escopo 1</small></div><div class="o">E2 ~8% • E3 ~2%</div></div>
+      </div>
+      <p class="fonte">*Cenário corrigido assume recarga de refrigerante de ~20 kg/ano (valor típico a confirmar). Todos os demais dados são os enviados.</p>
+      <table>
+        <thead><tr><th>Fonte</th><th>Base de cálculo</th><th class="n">tCO₂e (corrigido)</th><th class="n">%</th></tr></thead>
+        <tbody>
+          <tr><td>Gases refrigerantes R-410A</td><td>~20 kg × 2.088</td><td class="n">41,8</td><td class="n">76%</td></tr>
+          <tr><td>Diesel</td><td>2.400 L × 2,68</td><td class="n">6,4</td><td class="n">12%</td></tr>
+          <tr><td>Energia elétrica</td><td>72.000 kWh × 0,06</td><td class="n">4,3</td><td class="n">8%</td></tr>
+          <tr><td>Gasolina</td><td>500 L × 2,3</td><td class="n">1,2</td><td class="n">2%</td></tr>
+          <tr><td>Viagens + deslocamento</td><td>7.500 km × 0,17</td><td class="n">1,3</td><td class="n">2%</td></tr>
+          <tr><td>Fretes contratados</td><td>1.000 t.km × 0,1</td><td class="n">0,1</td><td class="n">0%</td></tr>
+          <tr class="tot"><td>Total (corrigido)</td><td></td><td class="n">~55</td><td class="n">100%</td></tr>
+        </tbody>
+      </table>
+      <div class="bar"><div class="t"><span>Refrigerante (F-gases)</span><span>~76%</span></div><div class="trilha"><div class="fill" style="width:76%;background:var(--vermelho)">76%</div></div></div>
+      <div class="bar"><div class="t"><span>Diesel</span><span>~12%</span></div><div class="trilha"><div class="fill" style="width:12%;background:var(--verde)">12%</div></div></div>
+      <div class="bar"><div class="t"><span>Energia elétrica</span><span>~8%</span></div><div class="trilha"><div class="fill" style="width:8%;background:var(--azul)">8%</div></div></div>
+      <div class="bar"><div class="t"><span>Gasolina + transporte de pessoas + frete</span><span>~4%</span></div><div class="trilha"><div class="fill" style="width:4%;background:var(--amarelo)">4%</div></div></div>
+      <div class="callout azul"><b>Insight do setor:</b> numa distribuidora de bebidas, o gás refrigerante (vazamentos das chopeiras/câmaras frias) e a energia da refrigeração são quase sempre as maiores fontes. É aí que estão o maior impacto climático <b>e</b> o maior custo evitável.</div>
+    </section>
+
+    <!-- 5. Onde reduzir -->
+    <section class="sec">
+      <h2><span class="n">5</span> Recomendações priorizadas</h2>
+      <p class="sub">Onde agir primeiro — do maior impacto (e economia) ao menor.</p>
+      <div class="passos">
+        <div class="passo"><b>Gestão de gases refrigerantes (prioridade máxima):</b> detectar e corrigir vazamentos, manutenção preventiva das chopeiras e câmaras, e planejar a migração para gases de menor GWP (ex.: R-32, R-290/propano ou R-744/CO₂). Corta a maior fonte e reduz perda de gás (custo).</div>
+        <div class="passo"><b>Eficiência da refrigeração + energia:</b> vedação e manutenção dos equipamentos de frio, termostatos bem regulados, iluminação LED. Avaliar energia renovável (solar/geração distribuída ou mercado livre) — corta o Escopo 2 e a conta de luz.</div>
+        <div class="passo"><b>Frota e entregas:</b> manutenção, calibragem, roteirização das entregas, e avaliar B100/HVO ou veículos elétricos na última milha.</div>
+        <div class="passo"><b>Deslocamento da equipe:</b> caronas, otimização de trajetos e, quando possível, incentivo a modos de menor emissão.</div>
+      </div>
+    </section>
+
+    <!-- 6. Estratégia de carbono -->
+    <section class="sec">
+      <h2><span class="n">6</span> Como usar o carbono a favor do negócio</h2>
+      <p class="sub">Uma distribuidora não gera crédito de remoção (não tem floresta/solo). O valor está em três frentes:</p>
+      <div class="duas">
+        <div class="box">
+          <h3>Reduzir custo (ganho imediato)</h3>
+          <p>Refrigerante e energia são as maiores contas evitáveis. Menos vazamento e menos consumo = menos emissão <u>e</u> menos despesa, sem depender de mercado de carbono.</p>
+        </div>
+        <div class="box">
+          <h3>Manter e ganhar contratos</h3>
+          <p>Grandes fabricantes de bebidas têm metas de carbono na cadeia. Uma distribuidora que mede e reduz fica alinhada e mais competitiva na renovação de contratos.</p>
+        </div>
+      </div>
+      <div class="box" style="margin-top:14px">
+        <h3>Neutralidade (opcional): reduzir + compensar</h3>
+        <p>Depois de reduzir, o saldo restante pode ser <b>compensado com a compra de créditos</b> para virar "distribuidora carbono neutro" — um diferencial de marca. Aqui o crédito é <b>comprado</b> (para compensar), não vendido.</p>
+      </div>
+    </section>
+
+    <!-- 7. Certificação -->
+    <section class="sec">
+      <h2><span class="n">7</span> Certificação: o que dá para buscar</h2>
+      <div class="duas">
+        <div class="box">
+          <h3>Faz sentido para o perfil</h3>
+          <ul class="lista">
+            <li>Inventário de GEE no GHG Protocol / ISO 14064-1 (publicável)</li>
+            <li>Selo de "empresa carbono neutro" via compensação do saldo</li>
+            <li>Plano de redução (F-gases + energia) documentado</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3>O que falta</h3>
+          <ul class="lista falta">
+            <li>Confirmar o refrigerante e completar frota/fretes e faturamento</li>
+            <li>Fechar o inventário completo do ano-base</li>
+            <li>Para neutralidade: compensação verificada + verificação por terceira parte</li>
+          </ul>
+        </div>
+      </div>
+      <p class="fonte">Observação: sem áreas de vegetação/solo, não há remoções para gerar e vender crédito — o caminho é reduzir e, se quiser, compensar.</p>
+    </section>
+
+    <!-- 8. Próximos passos -->
+    <section class="sec">
+      <h2><span class="n">8</span> Próximos passos</h2>
+      <div class="passos">
+        <div class="passo"><b>Confirmar o refrigerante</b> (kg de recarga por ano e tipo de gás) — muda tudo.</div>
+        <div class="passo"><b>Completar os dados</b> — toda a frota, entregas (t.km) e o faturamento correto.</div>
+        <div class="passo"><b>Plano de redução</b> — foco em vazamento de gás e eficiência de refrigeração.</div>
+        <div class="passo"><b>Decidir a estratégia</b> — só reduzir (economia) ou também compensar (carbono neutro).</div>
+      </div>
+    </section>
+
+    <!-- 9. Premissas -->
+    <section class="sec">
+      <h2><span class="n">9</span> Premissas e limites</h2>
+      <ul class="lista">
+        <li>Relatório preliminar com base nos dados enviados; o valor do refrigerante foi ajustado para um cenário plausível (a confirmar).</li>
+        <li>Fatores: IPCC (2006/2019) e GHG Protocol; GWP do R-410A = 2.088; fator do SIN e fatores de transporte são referências, atualizáveis ao caso.</li>
+        <li>Intensidade por receita e por litro não foram calculadas por falta de dados confiáveis (faturamento e volume distribuído).</li>
+      </ul>
+    </section>
+
+    <!-- Feedback (não sai no PDF) -->
+    <section class="sec feedback no-print" id="feedback">
+      <h2><span class="n" aria-hidden="true">★</span> Sua opinião sobre o relatório</h2>
+      <p class="sub">Leva menos de 1 minuto e ajuda muito a Carbona. Não gostou? Você tem <strong>7 dias de garantia</strong> — marque a opção de reembolso abaixo.</p>
+      <div class="fb">
+        <label class="fb-label">Como você avalia este relatório?</label>
+        <div class="estrelas" id="estrelas" role="radiogroup" aria-label="Nota de 1 a 5 estrelas">
+          <button type="button" data-n="1" aria-label="1 estrela">★</button>
+          <button type="button" data-n="2" aria-label="2 estrelas">★</button>
+          <button type="button" data-n="3" aria-label="3 estrelas">★</button>
+          <button type="button" data-n="4" aria-label="4 estrelas">★</button>
+          <button type="button" data-n="5" aria-label="5 estrelas">★</button>
+        </div>
+        <label class="fb-label" for="fb-comentario">Comentário — o que achou, o que faltou, dúvidas</label>
+        <textarea id="fb-comentario" placeholder="Escreva aqui sua opinião..."></textarea>
+        <label class="fb-label" for="fb-nome">Seu nome (opcional)</label>
+        <input type="text" id="fb-nome" autocomplete="name" />
+
+        <label class="fb-check"><input type="checkbox" id="fb-quero-reembolso" /> <span>Quero meu dinheiro de volta (garantia de 7 dias)</span></label>
+        <div class="fb-reembolso-campos" id="fb-reembolso-campos" hidden>
+          <label class="fb-label" style="margin-top:0">Quanto devemos devolver?</label>
+          <div class="fb-radios">
+            <label><input type="radio" name="fb-valor" value="total" checked /> Valor total pago (100%)</label>
+            <label><input type="radio" name="fb-valor" value="parte" /> Parte do valor</label>
+          </div>
+          <div id="fb-valor-parte" hidden>
+            <label class="fb-label" for="fb-valor-rs">Valor a devolver (R$)</label>
+            <input type="text" id="fb-valor-rs" inputmode="decimal" placeholder="Ex.: 100,00" />
+          </div>
+          <label class="fb-label" for="fb-pix-chave">Chave Pix para a devolução</label>
+          <input type="text" id="fb-pix-chave" placeholder="CPF, e-mail, telefone ou chave aleatória" />
+          <label class="fb-label" for="fb-pix-nome">Nome do titular da conta</label>
+          <input type="text" id="fb-pix-nome" autocomplete="name" />
+        </div>
+
+        <div class="fb-acoes">
+          <button type="button" class="btn btn-primario" id="fb-enviar">Enviar feedback por e-mail</button>
+          <a class="btn btn-contorno" id="fb-whats" href="#" rel="noopener">Enviar pelo WhatsApp</a>
+        </div>
+        <p class="fb-status" id="fb-status" role="status"></p>
+      </div>
+    </section>
+  </div>
+
+  <div class="rodape">
+    <b>Carbona</b> • Consultoria em Gestão de Carbono &amp; Ciência de Dados — relatório preliminar para a Cascavel Express (Brahma Express), com base nos dados enviados em 15/09/2026. Metodologia GHG Protocol / ISO 14064-1 e IPCC. Estimativas sujeitas a confirmação dos dados.
+  </div>
+
+  <script>
+    (function(){
+      "use strict";
+      var b=document.getElementById("btn-imprimir");
+      if(b)b.addEventListener("click",function(){window.print();});
+      var DESTINO="leonilsonk@gmail.com";
+      var WHATS="5517981888118";
+      var nota=0;
+      var estrelas=[].slice.call(document.querySelectorAll("#estrelas button"));
+      estrelas.forEach(function(bt){bt.addEventListener("click",function(){nota=parseInt(bt.getAttribute("data-n"),10);estrelas.forEach(function(x){x.classList.toggle("on",parseInt(x.getAttribute("data-n"),10)<=nota);});});});
+      var chkReemb=document.getElementById("fb-quero-reembolso");
+      var camposReemb=document.getElementById("fb-reembolso-campos");
+      var parte=document.getElementById("fb-valor-parte");
+      if(chkReemb)chkReemb.addEventListener("change",function(){camposReemb.hidden=!chkReemb.checked;});
+      [].slice.call(document.querySelectorAll('input[name="fb-valor"]')).forEach(function(r){r.addEventListener("change",function(){var sel=document.querySelector('input[name="fb-valor"]:checked');if(parte)parte.hidden=!(sel&&sel.value==="parte");});});
+      function querReembolso(){return !!(chkReemb&&chkReemb.checked);}
+      function assunto(){return querReembolso()?"Solicitação de reembolso — Relatório Cascavel Express":"Feedback do relatório — Cascavel Express";}
+      function val(id){var e=document.getElementById(id);return e?(e.value||"").trim():"";}
+      function texto(){
+        var L=["Feedback do relatório — Cascavel Express",
+          "Nota: "+(nota?nota+"/5":"(não informada)"),
+          "Comentário: "+(val("fb-comentario")||"(sem comentário)"),
+          "De: "+(val("fb-nome")||"(não informado)")];
+        if(querReembolso()){
+          var sel=document.querySelector('input[name="fb-valor"]:checked');
+          var v=sel?sel.value:"total";
+          var valorTxt=v==="parte"?("Parcial: R$ "+(val("fb-valor-rs")||"(informar)")):"Total pago (100%)";
+          L.push("");L.push("*** SOLICITAÇÃO DE REEMBOLSO (garantia de 7 dias) ***");
+          L.push("Valor a devolver: "+valorTxt);
+          L.push("Pix (chave): "+(val("fb-pix-chave")||"(informar)"));
+          L.push("Pix (titular): "+(val("fb-pix-nome")||"(informar)"));
+        }
+        return L.join("\n");
+      }
+      var env=document.getElementById("fb-enviar");
+      if(env)env.addEventListener("click",function(){
+        window.location.href="mailto:"+DESTINO+"?subject="+encodeURIComponent(assunto())+"&body="+encodeURIComponent(texto());
+        document.getElementById("fb-status").textContent=querReembolso()?"Abrimos seu e-mail com a solicitação de reembolso — é só enviar. Faremos a devolução via Pix.":"Abrimos seu e-mail com o feedback — é só clicar em enviar. Obrigado!";
+      });
+      var wa=document.getElementById("fb-whats");
+      if(wa)wa.addEventListener("click",function(e){e.preventDefault();window.open("https://wa.me/"+WHATS+"?text="+encodeURIComponent(texto()),"_blank");document.getElementById("fb-status").textContent=querReembolso()?"Abrindo o WhatsApp com sua solicitação de reembolso.":"Abrindo o WhatsApp com seu feedback. Obrigado!";});
+    })();
+  </script>
+</body>
+</html>

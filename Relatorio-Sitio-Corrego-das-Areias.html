@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Relatório de Carbono — Sítio Córrego das Areias | Carbona</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/png" href="Generatedimage_1789424126672.png" />
+  <style>
+    :root{
+      --verde:#2e7d32;--verde-escuro:#1b5e20;--verde-claro:#e8f2e9;--azul:#1565c0;--azul-claro:#e7f0fb;
+      --amarelo:#f9a825;--amarelo-claro:#fef3d8;--amarelo-escuro:#7a5300;--teal:#0f9d78;--teal-escuro:#0b7a5e;--teal-claro:#e2f6f0;
+      --vermelho:#c62828;--vermelho-claro:#fbe3e3;--texto:#1a1a1a;--cinza:#555;--cinza-claro:#f5f7f5;--borda:#e2e8e2;
+      --raio:14px;--sombra-sm:0 1px 2px rgba(16,24,16,.06),0 1px 3px rgba(16,24,16,.08);--sombra:0 4px 6px rgba(16,24,16,.05),0 10px 24px rgba(16,24,16,.07);
+      --fonte:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:var(--fonte);color:var(--texto);background:var(--cinza-claro);line-height:1.55;font-size:15.5px}
+    h1,h2,h3{line-height:1.2;font-weight:800;letter-spacing:-.02em;margin:0 0 .4em}
+    p{margin:0 0 .9em;color:#333}a{color:var(--verde);text-decoration:none}
+    .container{max-width:900px;margin:0 auto;padding:0 24px}
+    .topbar{position:sticky;top:0;z-index:50;height:62px;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--borda)}
+    .topbar .container{height:100%;display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .tb-logo{height:38px;width:auto}
+    .btn{display:inline-flex;align-items:center;gap:8px;font-family:inherit;font-size:.92rem;font-weight:700;padding:10px 15px;border-radius:9px;border:2px solid transparent;cursor:pointer}
+    .btn-primario{background:var(--verde);color:#fff}.btn-contorno{background:#fff;color:var(--verde-escuro);border-color:var(--borda)}
+    .link-voltar{font-weight:700;font-size:.9rem;color:var(--cinza)}
+    .doc{max-width:900px;margin:22px auto 60px;background:#fff;border:1px solid var(--borda);border-radius:16px;box-shadow:var(--sombra);overflow:hidden}
+    .capa{padding:34px 40px 26px;background:radial-gradient(760px 300px at 92% -25%,var(--teal-claro),transparent 60%),linear-gradient(180deg,var(--verde-claro),#fff 80%);border-bottom:1px solid var(--borda)}
+    .capa-logo{height:96px;width:auto;margin-bottom:16px}
+    .aviso{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--amarelo-escuro);background:var(--amarelo-claro);border:1px solid #f3d38a;padding:5px 12px;border-radius:999px;margin-bottom:12px}
+    .capa h1{font-size:clamp(1.5rem,3.4vw,2rem)}
+    .capa .meta{color:var(--cinza);font-weight:600;margin:0}
+    .sec{padding:26px 40px;border-bottom:1px solid var(--borda)}.sec:last-child{border-bottom:0}
+    .sec h2{font-size:1.25rem;margin:0 0 4px;display:flex;align-items:center;gap:10px}
+    .sec h2 .n{width:30px;height:30px;border-radius:50%;background:var(--verde);color:#fff;font-size:.9rem;display:inline-flex;align-items:center;justify-content:center;flex:none}
+    .sec .sub{font-size:.9rem;color:var(--cinza);margin:0 0 16px}
+    table{width:100%;border-collapse:collapse;font-size:.9rem;margin:6px 0 4px}
+    th,td{padding:9px 11px;border-top:1px solid var(--borda);text-align:left;vertical-align:top}
+    thead th{background:var(--cinza-claro);font-size:.74rem;text-transform:uppercase;letter-spacing:.03em;color:var(--cinza);border-top:0}
+    td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+    tr.tot td{font-weight:800;border-top:2px solid var(--borda);background:#fafbfa}
+    .tag{display:inline-block;font-size:.68rem;font-weight:800;padding:2px 8px;border-radius:999px;text-transform:uppercase;letter-spacing:.03em}
+    .tag.ok{background:var(--verde-claro);color:var(--verde-escuro)}.tag.est{background:var(--amarelo-claro);color:var(--amarelo-escuro)}.tag.bio{background:var(--azul-claro);color:var(--azul)}
+    .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:6px 0}
+    .card{border:1px solid var(--borda);border-radius:12px;padding:14px;border-top:4px solid var(--verde)}
+    .card.est{border-top-color:var(--amarelo)}.card.teal{border-top-color:var(--teal)}.card.escuro{border-top-color:var(--verde-escuro)}
+    .card .r{font-size:.72rem;font-weight:700;color:var(--cinza);text-transform:uppercase;margin-bottom:5px}
+    .card .v{font-size:1.35rem;font-weight:800;letter-spacing:-.02em}.card .v small{font-size:.7rem;color:var(--cinza);font-weight:700}
+    .card .o{font-size:.75rem;color:var(--cinza);margin-top:4px}
+    .bar{margin:9px 0}.bar .t{display:flex;justify-content:space-between;font-size:.86rem;font-weight:600;margin-bottom:4px}
+    .bar .trilha{height:20px;background:var(--cinza-claro);border-radius:6px;overflow:hidden}
+    .bar .fill{height:100%;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;color:#fff;font-weight:800;font-size:.74rem}
+    .callout{border-radius:12px;padding:14px 16px;margin:12px 0;font-size:.92rem}
+    .callout.verde{background:var(--verde-claro);border:1px solid #bcdfc0;color:#1c4e20}
+    .callout.amarelo{background:var(--amarelo-claro);border:1px solid #f3d38a;color:#6b4a06}
+    .callout.azul{background:var(--azul-claro);border:1px solid #bcd7f5;color:#123a6b}
+    .callout.vermelho{background:var(--vermelho-claro);border:1px solid #f1b7b7;color:#7a1616}
+    ul.lista{margin:.3em 0 1em;padding-left:0;list-style:none}
+    ul.lista li{position:relative;padding-left:22px;margin-bottom:7px;font-size:.92rem}
+    ul.lista li::before{content:"";position:absolute;left:2px;top:8px;width:8px;height:8px;border-radius:2px;background:var(--verde)}
+    ul.falta li::before{background:var(--amarelo)}
+    .passos{display:grid;gap:10px;counter-reset:p}
+    .passo{position:relative;padding:12px 14px 12px 46px;border:1px solid var(--borda);border-radius:10px;font-size:.9rem}
+    .passo::before{counter-increment:p;content:counter(p);position:absolute;left:12px;top:12px;width:24px;height:24px;border-radius:50%;background:var(--verde);color:#fff;font-weight:800;font-size:.82rem;display:flex;align-items:center;justify-content:center}
+    .passo b{color:var(--texto)}
+    .duas{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .box{border:1px solid var(--borda);border-radius:12px;padding:16px}.box h3{font-size:1rem;margin:0 0 8px}
+    .fonte{font-size:.8rem;color:var(--cinza)}
+    .rodape{padding:22px 40px;background:#10240f;color:#a9c0a6;font-size:.82rem}.rodape b{color:#fff}
+    .fb{max-width:580px}
+    .fb-label{display:block;font-weight:700;font-size:.9rem;margin:12px 0 6px}
+    .estrelas{display:flex;gap:4px}
+    .estrelas button{font-size:2rem;line-height:1;background:none;border:none;cursor:pointer;color:#d8ddd6;padding:0 3px;transition:color .12s ease;-webkit-tap-highlight-color:transparent}
+    .estrelas button.on{color:var(--amarelo)}
+    .fb textarea,.fb input{width:100%;font-family:inherit;font-size:1rem;padding:11px 13px;border:1px solid var(--borda);border-radius:9px;background:#fff;color:var(--texto)}
+    .fb textarea{min-height:92px;resize:vertical}
+    .fb textarea:focus,.fb input:focus{border-color:var(--verde);box-shadow:0 0 0 3px var(--verde-claro);outline:none}
+    .fb-acoes{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .fb-status{font-weight:700;color:var(--verde-escuro);margin:12px 0 0;min-height:1em}
+    .fb-check{display:flex;align-items:center;gap:9px;font-weight:700;font-size:.92rem;margin:18px 0 0;cursor:pointer}
+    .fb-check input{width:18px;height:18px;flex:none}
+    .fb-reembolso-campos{margin-top:10px;padding:14px 16px;border:1px dashed #e3b657;background:var(--amarelo-claro);border-radius:10px}
+    .fb-radios{display:flex;flex-wrap:wrap;gap:16px;font-size:.92rem;font-weight:600}
+    .fb-radios label{display:flex;align-items:center;gap:7px;cursor:pointer}
+    .sec.feedback{background:linear-gradient(180deg,var(--teal-claro),#fff 60%)}
+    [hidden]{display:none!important}
+    @media(max-width:760px){.cards{grid-template-columns:repeat(2,1fr)}.duas{grid-template-columns:1fr}.sec,.capa{padding-left:22px;padding-right:22px}}
+  </style>
+</head>
+<body>
+  <header class="topbar no-print">
+    <div class="container">
+      <a href="index.html"><img class="tb-logo" src="carbona-logo.png" alt="Carbona" /></a>
+      <div style="display:flex;gap:10px;align-items:center">
+        <a href="index.html" class="link-voltar">← Voltar ao site</a>
+        <a href="index.html#contato" class="btn btn-primario">Falar com a Carbona</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="doc">
+    <div class="capa">
+      <img class="capa-logo" src="carbona-logo.png" alt="Carbona" onerror="this.style.display='none'" />
+      <span class="aviso">Relatório preliminar • baseado nos dados enviados</span>
+      <h1>Relatório de Carbono — Sítio Córrego das Areias</h1>
+      <p class="meta">Cafeicultura • Minas Gerais • Ano-base 2025–2026 • Responsável: Marcio Luiz de Souza</p>
+    </div>
+
+    <!-- 1. Dados recebidos -->
+    <section class="sec">
+      <h2><span class="n">1</span> Dados recebidos</h2>
+      <p class="sub">Informado no formulário de coleta (período marcado como "Set/2026").</p>
+      <table>
+        <thead><tr><th>Item</th><th>Escopo</th><th class="n">Quantidade</th></tr></thead>
+        <tbody>
+          <tr><td>Diesel</td><td>Escopo 1</td><td class="n">20.000 L</td></tr>
+          <tr><td>Gasolina</td><td>Escopo 1</td><td class="n">3.000 L</td></tr>
+          <tr><td>Etanol (hidratado)</td><td>Escopo 1</td><td class="n">1.000 L</td></tr>
+          <tr><td>Gás natural</td><td>Escopo 1</td><td class="n">28,2 m³</td></tr>
+          <tr><td>Lenha / biomassa</td><td>Escopo 1</td><td class="n">15 t</td></tr>
+          <tr><td>Adubo NPK 20-05-20</td><td>Escopo 1</td><td class="n">45 t</td></tr>
+          <tr><td>Fonte nitrogenada</td><td>Escopo 1</td><td class="n">5 t</td></tr>
+          <tr><td>Calcário (calagem)</td><td>Escopo 1</td><td class="n">45 t</td></tr>
+          <tr><td>Energia elétrica (rede)</td><td>Escopo 2</td><td class="n">912 kWh</td></tr>
+          <tr><td>Resíduos (aterro / reciclados)</td><td>Escopo 3</td><td class="n">2 t / 5 t</td></tr>
+          <tr><td>Efluentes tratados</td><td>Escopo 3</td><td class="n">500 m³</td></tr>
+          <tr><td>Viagens + deslocamento equipe</td><td>Escopo 3</td><td class="n">1.500 + 3.000 km</td></tr>
+          <tr><td>Água consumida</td><td>—</td><td class="n">600.000 m³ (?)</td></tr>
+          <tr><td>Fixação: nativa em regeneração / eucalipto / solo</td><td>Remoções</td><td class="n">35 / 1 / 1 ha</td></tr>
+          <tr><td>Café</td><td>—</td><td class="n">150.000 pés • 1.000 sacas</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 2. Qualidade dos dados -->
+    <section class="sec">
+      <h2><span class="n">2</span> Checagem de qualidade dos dados</h2>
+      <p class="sub">Pontos que precisam de confirmação antes de um inventário definitivo.</p>
+      <div class="callout verde"><b>Fertilizante e calagem confirmados pelo produtor</b> — já incorporados ao cálculo: NPK 20-05-20 (45 t), fonte nitrogenada (5 t) e calcário (45 t). Ainda pendentes: período (mensal x anual), o valor da água, a energia e o faturamento.</div>
+      <div class="callout vermelho"><b>Água = 600.000 m³:</b> valor altíssimo para um sítio (equivale a 600 milhões de litros). Provável erro de digitação. Obs.: a água em si não é uma emissão direta de GEE — só a energia/diesel de bombeamento conta, e isso já entra em energia/combustível.</div>
+      <div class="callout amarelo"><b>Período "Set/2026":</b> os consumos (20.000 L de diesel, etc.) parecem ser do ano todo, não de um mês. Assumimos base anual — confirmar para não superestimar.</div>
+      <div class="callout azul"><b>Nota metodológica:</b> etanol e lenha são combustíveis de origem biológica — seu CO₂ é biogênico e, pelo GHG Protocol, é reportado à parte (não somado ao total fóssil).</div>
+    </section>
+
+    <!-- 3. Metodologia -->
+    <section class="sec">
+      <h2><span class="n">3</span> Metodologia e fatores</h2>
+      <p class="sub">Cálculo conforme GHG Protocol e IPCC (2006/2019).</p>
+      <ul class="lista">
+        <li><b>Combustíveis:</b> diesel 2,68 kg CO₂e/L; gasolina 2,3; gás natural 2,0 kg CO₂e/m³. Etanol e lenha: CO₂ biogênico (reportado à parte).</li>
+        <li><b>Fertilizantes (N₂O):</b> IPCC — 1% do N aplicado (direto) + parcelas indiretas; GWP do N₂O = 273. N total ≈ 11,3 t (9 t do NPK 20-05-20 + ~2,3 t da fonte nitrogenada, assumida ureia 46% N).</li>
+        <li><b>Calagem:</b> ~0,44 t CO₂ por tonelada de calcário (IPCC).</li>
+        <li><b>Energia:</b> fator médio do SIN ≈ 0,06 tCO₂e/MWh. <b>Resíduos aterro:</b> 0,6 tCO₂e/t. <b>Transporte:</b> ≈ 0,17 kg CO₂e/km.</li>
+        <li><b>Fixação:</b> área × fator de remoção (tCO₂e/ha·ano), faixas da literatura — vegetação nativa em regeneração, floresta plantada e solo. Valores ilustrativos, exigem medição em campo.</li>
+      </ul>
+    </section>
+
+    <!-- 4. Emissoes -->
+    <section class="sec">
+      <h2><span class="n">4</span> Emissões estimadas</h2>
+      <p class="sub">Fontes confirmadas, agora com o fertilizante e a calagem informados pelo produtor.</p>
+      <table>
+        <thead><tr><th>Fonte</th><th>Base de cálculo</th><th class="n">tCO₂e/ano</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Fertilizantes — N₂O</td><td>NPK 45 t + N 5 t → ~11,3 t N (IPCC)</td><td class="n">~64,3</td><td><span class="tag ok">informado</span></td></tr>
+          <tr><td>Diesel</td><td>20.000 L × 2,68</td><td class="n">53,6</td><td><span class="tag ok">confirmado</span></td></tr>
+          <tr><td>Calagem (calcário)</td><td>45 t × 0,44</td><td class="n">~19,8</td><td><span class="tag ok">informado</span></td></tr>
+          <tr><td>Gasolina</td><td>3.000 L × 2,3</td><td class="n">6,9</td><td><span class="tag ok">confirmado</span></td></tr>
+          <tr><td>Resíduos p/ aterro</td><td>2 t × 0,6</td><td class="n">1,2</td><td><span class="tag ok">confirmado</span></td></tr>
+          <tr><td>Viagens + deslocamento</td><td>4.500 km × 0,17</td><td class="n">0,8</td><td><span class="tag ok">confirmado</span></td></tr>
+          <tr><td>Gás natural + energia elétrica</td><td>valores pequenos</td><td class="n">0,1</td><td><span class="tag ok">confirmado</span></td></tr>
+          <tr><td>Etanol + lenha</td><td>combustão biogênica</td><td class="n">~0*</td><td><span class="tag bio">biogênico</span></td></tr>
+          <tr class="tot"><td>Emissões brutas</td><td></td><td class="n">~147</td><td></td></tr>
+        </tbody>
+      </table>
+      <p class="fonte">*CO₂ biogênico (etanol e lenha) reportado à parte, conforme o GHG Protocol — não somado ao total fóssil.</p>
+      <div class="bar"><div class="t"><span>Fertilizantes (N₂O)</span><span>~44%</span></div><div class="trilha"><div class="fill" style="width:44%;background:var(--amarelo)">44%</div></div></div>
+      <div class="bar"><div class="t"><span>Diesel</span><span>~37%</span></div><div class="trilha"><div class="fill" style="width:37%;background:var(--verde)">37%</div></div></div>
+      <div class="bar"><div class="t"><span>Calagem</span><span>~13%</span></div><div class="trilha"><div class="fill" style="width:13%;background:var(--azul)">13%</div></div></div>
+      <div class="bar"><div class="t"><span>Gasolina + resíduos + transporte</span><span>~6%</span></div><div class="trilha"><div class="fill" style="width:6%;background:var(--cinza)">6%</div></div></div>
+      <div class="callout azul"><b>Insight:</b> as maiores fontes são o <b>fertilizante</b> (N₂O, ~44%), o <b>diesel</b> (~37%, 20.000 L ≈ R$ 124 mil/ano) e a <b>calagem</b> (~13%). São, ao mesmo tempo, as maiores oportunidades de reduzir custo e emissão.</div>
+    </section>
+
+    <!-- 5. Fixação -->
+    <section class="sec">
+      <h2><span class="n">5</span> Fixação de carbono — o grande trunfo do sítio</h2>
+      <p class="sub">As áreas de vegetação removem carbono da atmosfera. Aqui está a força deste sítio.</p>
+      <table>
+        <thead><tr><th>Categoria</th><th class="n">Área</th><th class="n">Fator (tCO₂e/ha·ano)</th><th class="n">Remoções (tCO₂e/ano)</th></tr></thead>
+        <tbody>
+          <tr><td>Vegetação nativa em regeneração (APP/RL)</td><td class="n">35 ha</td><td class="n">7,0</td><td class="n">~245</td></tr>
+          <tr><td>Floresta plantada (eucalipto)</td><td class="n">1 ha</td><td class="n">20,0</td><td class="n">~20</td></tr>
+          <tr><td>Carbono no solo (plantio direto)</td><td class="n">1 ha</td><td class="n">1,5</td><td class="n">~1,5</td></tr>
+          <tr class="tot"><td>Total de remoções</td><td class="n">37 ha</td><td></td><td class="n">~266</td></tr>
+        </tbody>
+      </table>
+      <div class="callout verde"><b>Destaque:</b> os 35 ha de vegetação nativa em regeneração respondem por quase todo o sequestro. Além disso, os 150.000 pés de café também fixam carbono (não somado aqui) — ou seja, o potencial é ainda maior.</div>
+      <div class="callout amarelo"><b>Estimativa, não medição.</b> Para virar crédito/certificação, o sequestro precisa ser medido em campo (equações alométricas + amostragem de solo) e monitorado.</div>
+    </section>
+
+    <!-- 6. Balanço -->
+    <section class="sec">
+      <h2><span class="n">6</span> Balanço de carbono</h2>
+      <p class="sub">Emissões brutas estimadas contra remoções estimadas.</p>
+      <div class="cards">
+        <div class="card est"><div class="r">Emissões brutas</div><div class="v">~147 <small>tCO₂e</small></div><div class="o">com fertilizante e calagem</div></div>
+        <div class="card teal"><div class="r">Remoções</div><div class="v">~266 <small>tCO₂e</small></div><div class="o">áreas de fixação</div></div>
+        <div class="card escuro"><div class="r">Balanço líquido</div><div class="v">~ −120 <small>tCO₂e</small></div><div class="o">sumidouro líquido</div></div>
+        <div class="card"><div class="r">Intensidade (bruta)</div><div class="v">~147 <small>kgCO₂e/saca</small></div><div class="o">líquida: negativa</div></div>
+      </div>
+      <div class="bar"><div class="t"><span>Emissões brutas</span><span>~147 t</span></div><div class="trilha"><div class="fill" style="width:55%;background:var(--verde-escuro)">147</div></div></div>
+      <div class="bar"><div class="t"><span>Remoções (fixação)</span><span>~266 t</span></div><div class="trilha"><div class="fill" style="width:100%;background:var(--teal)">266</div></div></div>
+      <div class="callout verde"><b>Mensagem principal:</b> mesmo com o fertilizante e a calagem já incluídos, o Sítio Córrego das Areias é <b>carbono negativo</b> — as remoções (~266 t) são cerca de <b>1,8× as emissões</b> (~147 t), graças sobretudo aos 35 ha em regeneração. É um diferencial forte para vender <b>café carbono neutro/negativo</b>. Medindo o sequestro em campo, o resultado fica comprovável.</div>
+    </section>
+
+    <!-- 7. Recomendações + monetização -->
+    <section class="sec">
+      <h2><span class="n">7</span> Recomendações e como gerar valor</h2>
+      <p class="sub">Reduzir custo agora e transformar o carbono em receita.</p>
+      <div class="passos">
+        <div class="passo"><b>Diesel (maior custo):</b> 20.000 L/ano (~R$ 124 mil) — manutenção, dimensionamento de máquinas, roteirização e avaliar B100/HVO. Corta custo e emissão.</div>
+        <div class="passo"><b>Fertilizante:</b> análise de solo, parcelamento e fontes estabilizadas/inibidores de nitrificação — reduz o N₂O e o gasto com adubo.</div>
+        <div class="passo"><b>Documentar a regeneração (35 ha):</b> é o trunfo — medir e monitorar para converter em crédito de carbono e/ou em "café carbono negativo".</div>
+        <div class="passo"><b>Energia:</b> uso de rede é baixo (912 kWh) — se houver gerador a diesel, avaliar energia solar.</div>
+      </div>
+      <div class="duas" style="margin-top:14px">
+        <div class="box"><h3>Usar (mais indicado)</h3><p>Vender <b>café carbono neutro/negativo</b> com prêmio de preço — torrefadores e exportadores valorizam. Nessa escala, tende a render mais que vender crédito bruto.</p></div>
+        <div class="box"><h3>Vender crédito</h3><p>As áreas de fixação podem gerar crédito de remoção, normalmente via <b>cooperativa/agregador</b> (a escala individual é pequena para um projeto próprio).</p></div>
+      </div>
+    </section>
+
+    <!-- 8. Certificação -->
+    <section class="sec">
+      <h2><span class="n">8</span> Certificação: a fazenda já atende?</h2>
+      <div class="duas">
+        <div class="box"><h3>Já tem a favor</h3>
+          <ul class="lista">
+            <li>35 ha de vegetação nativa em regeneração (forte sequestro)</li>
+            <li>Café (cultura perene que fixa carbono) + floresta plantada</li>
+            <li>Práticas de solo (plantio direto) e reciclagem/compostagem de resíduos</li>
+          </ul>
+        </div>
+        <div class="box"><h3>O que falta</h3>
+          <ul class="lista falta">
+            <li>Confirmar fertilizante, período e água; completar o inventário</li>
+            <li>CAR + mapa georreferenciado das áreas</li>
+            <li>Medição de estoque de carbono (alometria + solo) com monitoramento (MRV)</li>
+            <li>Adicionalidade/permanência e verificação por terceira parte (via agregador pela escala)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. Próximos passos -->
+    <section class="sec">
+      <h2><span class="n">9</span> Próximos passos</h2>
+      <div class="passos">
+        <div class="passo"><b>Confirmar período, água, energia e faturamento</b> — base anual (ou mensal), o valor real da água, a energia do ano e a receita para intensidade.</div>
+        <div class="passo"><b>Confirmar a fonte nitrogenada</b> (os 5 t) — se não for ureia, ajustamos o N₂O.</div>
+        <div class="passo"><b>Medir a área e o sequestro</b> — transformar a estimativa das 37 ha em número defensável.</div>
+        <div class="passo"><b>Escolher a estratégia</b> — café carbono negativo (prêmio) e/ou crédito via agregador.</div>
+      </div>
+    </section>
+
+    <!-- 10. Premissas -->
+    <section class="sec">
+      <h2><span class="n">10</span> Premissas e limites</h2>
+      <ul class="lista">
+        <li>Fertilizante e calagem informados pelo produtor (NPK 45 t + N 5 t + calcário 45 t); a fonte nitrogenada foi assumida como ureia (46% N) — a confirmar. O sequestro é estimado e precisa de medição em campo.</li>
+        <li>Etanol e lenha tratados como biogênicos (CO₂ não somado ao total fóssil).</li>
+        <li>Água (600.000 m³) não entra como emissão direta; valor a confirmar.</li>
+        <li>Fatores: IPCC (2006/2019) e GHG Protocol; GWP N₂O = 273; fatores do SIN, transporte e sequestro são referências, atualizáveis ao caso.</li>
+      </ul>
+    </section>
+
+    <!-- Feedback (não sai no PDF) -->
+    <section class="sec feedback no-print" id="feedback">
+      <h2><span class="n" aria-hidden="true">★</span> Sua opinião sobre o relatório</h2>
+      <p class="sub">Leva menos de 1 minuto e ajuda muito a Carbona. Não gostou? Você tem <strong>7 dias de garantia</strong> — marque a opção de reembolso abaixo.</p>
+      <div class="fb">
+        <label class="fb-label">Como você avalia este relatório?</label>
+        <div class="estrelas" id="estrelas" role="radiogroup" aria-label="Nota de 1 a 5 estrelas">
+          <button type="button" data-n="1" aria-label="1 estrela">★</button>
+          <button type="button" data-n="2" aria-label="2 estrelas">★</button>
+          <button type="button" data-n="3" aria-label="3 estrelas">★</button>
+          <button type="button" data-n="4" aria-label="4 estrelas">★</button>
+          <button type="button" data-n="5" aria-label="5 estrelas">★</button>
+        </div>
+        <label class="fb-label" for="fb-comentario">Comentário — o que achou, o que faltou, dúvidas</label>
+        <textarea id="fb-comentario" placeholder="Escreva aqui sua opinião..."></textarea>
+        <label class="fb-label" for="fb-nome">Seu nome (opcional)</label>
+        <input type="text" id="fb-nome" autocomplete="name" />
+
+        <label class="fb-check"><input type="checkbox" id="fb-quero-reembolso" /> <span>Quero meu dinheiro de volta (garantia de 7 dias)</span></label>
+        <div class="fb-reembolso-campos" id="fb-reembolso-campos" hidden>
+          <label class="fb-label" style="margin-top:0">Quanto devemos devolver?</label>
+          <div class="fb-radios">
+            <label><input type="radio" name="fb-valor" value="total" checked /> Valor total pago (100%)</label>
+            <label><input type="radio" name="fb-valor" value="parte" /> Parte do valor</label>
+          </div>
+          <div id="fb-valor-parte" hidden>
+            <label class="fb-label" for="fb-valor-rs">Valor a devolver (R$)</label>
+            <input type="text" id="fb-valor-rs" inputmode="decimal" placeholder="Ex.: 100,00" />
+          </div>
+          <label class="fb-label" for="fb-pix-chave">Chave Pix para a devolução</label>
+          <input type="text" id="fb-pix-chave" placeholder="CPF, e-mail, telefone ou chave aleatória" />
+          <label class="fb-label" for="fb-pix-nome">Nome do titular da conta</label>
+          <input type="text" id="fb-pix-nome" autocomplete="name" />
+        </div>
+
+        <div class="fb-acoes">
+          <button type="button" class="btn btn-primario" id="fb-enviar">Enviar feedback por e-mail</button>
+          <a class="btn btn-contorno" id="fb-whats" href="#" rel="noopener">Enviar pelo WhatsApp</a>
+        </div>
+        <p class="fb-status" id="fb-status" role="status"></p>
+      </div>
+    </section>
+  </div>
+
+  <div class="rodape">
+    <b>Carbona</b> • Consultoria em Gestão de Carbono &amp; Ciência de Dados — relatório preliminar para o Sítio Córrego das Areias, com base nos dados enviados em 15/09/2026. Metodologia GHG Protocol / ISO 14064-1 e IPCC. Estimativas sujeitas a confirmação e medição de campo.
+  </div>
+
+  <script>
+    (function(){
+      "use strict";
+      var DESTINO="leonilsonk@gmail.com";
+      var WHATS="5517981888118";
+      var nota=0;
+      var estrelas=[].slice.call(document.querySelectorAll("#estrelas button"));
+      estrelas.forEach(function(bt){bt.addEventListener("click",function(){nota=parseInt(bt.getAttribute("data-n"),10);estrelas.forEach(function(x){x.classList.toggle("on",parseInt(x.getAttribute("data-n"),10)<=nota);});});});
+      var chkReemb=document.getElementById("fb-quero-reembolso");
+      var camposReemb=document.getElementById("fb-reembolso-campos");
+      var parte=document.getElementById("fb-valor-parte");
+      if(chkReemb)chkReemb.addEventListener("change",function(){camposReemb.hidden=!chkReemb.checked;});
+      [].slice.call(document.querySelectorAll('input[name="fb-valor"]')).forEach(function(r){r.addEventListener("change",function(){var sel=document.querySelector('input[name="fb-valor"]:checked');if(parte)parte.hidden=!(sel&&sel.value==="parte");});});
+      function querReembolso(){return !!(chkReemb&&chkReemb.checked);}
+      function assunto(){return querReembolso()?"Solicitação de reembolso — Relatório Sítio Córrego das Areias":"Feedback do relatório — Sítio Córrego das Areias";}
+      function val(id){var e=document.getElementById(id);return e?(e.value||"").trim():"";}
+      function texto(){
+        var L=["Feedback do relatório — Sítio Córrego das Areias",
+          "Nota: "+(nota?nota+"/5":"(não informada)"),
+          "Comentário: "+(val("fb-comentario")||"(sem comentário)"),
+          "De: "+(val("fb-nome")||"(não informado)")];
+        if(querReembolso()){
+          var sel=document.querySelector('input[name="fb-valor"]:checked');
+          var v=sel?sel.value:"total";
+          var valorTxt=v==="parte"?("Parcial: R$ "+(val("fb-valor-rs")||"(informar)")):"Total pago (100%)";
+          L.push("");L.push("*** SOLICITAÇÃO DE REEMBOLSO (garantia de 7 dias) ***");
+          L.push("Valor a devolver: "+valorTxt);
+          L.push("Pix (chave): "+(val("fb-pix-chave")||"(informar)"));
+          L.push("Pix (titular): "+(val("fb-pix-nome")||"(informar)"));
+        }
+        return L.join("\n");
+      }
+      var env=document.getElementById("fb-enviar");
+      if(env)env.addEventListener("click",function(){
+        window.location.href="mailto:"+DESTINO+"?subject="+encodeURIComponent(assunto())+"&body="+encodeURIComponent(texto());
+        document.getElementById("fb-status").textContent=querReembolso()?"Abrimos seu e-mail com a solicitação de reembolso — é só enviar. Faremos a devolução via Pix.":"Abrimos seu e-mail com o feedback — é só clicar em enviar. Obrigado!";
+      });
+      var wa=document.getElementById("fb-whats");
+      if(wa)wa.addEventListener("click",function(e){e.preventDefault();window.open("https://wa.me/"+WHATS+"?text="+encodeURIComponent(texto()),"_blank");document.getElementById("fb-status").textContent=querReembolso()?"Abrindo o WhatsApp com sua solicitação de reembolso.":"Abrindo o WhatsApp com seu feedback. Obrigado!";});
+    })();
+  </script>
+</body>
+</html>
