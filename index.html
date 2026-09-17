@@ -1233,6 +1233,25 @@
     .exemplo-cta p { margin: 0; font-size: 0.95rem; }
     .exemplo-cta .btn { flex: none; }
 
+    /* Aviso destacado: qual formulário preencher (na calculadora) */
+    .aviso-form {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin: 0 auto 30px;
+      max-width: 860px;
+      padding: 18px 22px;
+      background: var(--amarelo-claro);
+      border: 1px solid #f3d38a;
+      border-radius: var(--raio);
+    }
+    .aviso-form .af-texto { display: flex; align-items: flex-start; gap: 12px; flex: 1; min-width: 260px; }
+    .aviso-form .af-texto svg { flex: none; color: #b57505; margin-top: 1px; }
+    .aviso-form p { margin: 0; font-size: 0.95rem; color: #6b4a06; }
+    .aviso-form .btn { flex: none; }
+
     /* =========================================================
        ANIMAÇÃO DE ENTRADA (revelar ao rolar)
        ========================================================= */
@@ -1351,7 +1370,6 @@
           <a href="#problema">Problema</a>
           <a href="#solucao">Solução</a>
           <a href="#protocolo">Protocolo</a>
-          <a href="#calculadora">Calculadora</a>
           <a href="#segmentos">Segmentos</a>
           <a href="#contato">Contato</a>
         </div>
@@ -1377,11 +1395,11 @@
             <strong>onde estão as oportunidades de corte e compensação</strong>.
           </p>
           <div class="hero-acoes">
-            <a href="#calculadora" class="btn btn-primario">
+            <a href="coleta-online.html" class="btn btn-primario">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <rect x="4" y="2" width="16" height="20" rx="2" /><line x1="8" y1="6" x2="16" y2="6" /><line x1="8" y1="10" x2="8" y2="10" /><line x1="12" y1="10" x2="12" y2="10" /><line x1="16" y1="10" x2="16" y2="10" /><line x1="8" y1="14" x2="8" y2="14" /><line x1="12" y1="14" x2="12" y2="14" /><line x1="16" y1="14" x2="16" y2="18" />
               </svg>
-              Calcular agora
+              Solicitar meu relatório
             </a>
             <a href="exemplo-dashboard.html" class="btn btn-amarelo">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -1638,11 +1656,11 @@
         <!-- Download do kit de coleta de dados em Excel -->
         <div class="faixa-download revelar">
           <div class="fd-texto">
-            <h3>Kit de Coleta de Dados</h3>
+            <h3>Kit de Coleta de Dados — o formulário do seu relatório</h3>
             <p>
-              Reúna e nos envie os dados da sua operação — consumos por escopo e áreas de fixação — para a Carbona
-              rodar os cálculos e montar o relatório. <strong>Preencha online em minutos</strong> ou baixe a planilha
-              para preencher com calma. É o formulário de dados que alimenta o cálculo (não é o protocolo em si).
+              <strong>É este o formulário que você precisa preencher para receber seu relatório de carbono.</strong>
+              Informe os consumos por escopo e as áreas de fixação:
+              <strong>preencha online em minutos</strong> ou baixe a planilha para preencher com calma.
             </p>
           </div>
           <div class="fd-acoes">
@@ -1664,111 +1682,32 @@
     </section>
 
     <!-- =========================================================
-         CALCULADORA (peça central)
+         SOLICITE SEU RELATÓRIO
          ========================================================= -->
-    <section id="calculadora" class="secao-alt" aria-labelledby="calc-titulo">
+    <section id="solicitar" class="secao-alt" aria-labelledby="solicitar-titulo">
       <div class="container">
         <div class="secao-cabecalho revelar">
-          <span class="eyebrow">Calculadora de emissões</span>
-          <h2 id="calc-titulo">Estime sua pegada de carbono em tempo real</h2>
+          <span class="eyebrow">Solicite seu relatório</span>
+          <h2 id="solicitar-titulo">Descubra a pegada de carbono da sua operação</h2>
           <p>
-            Informe seus consumos e veja o resultado na hora, em toneladas de CO₂ equivalente (tCO₂e),
-            separado por escopo e por fonte. Uma prévia do que a Carbona entrega no relatório completo.
+            Preencha o <strong>Kit de Coleta de Dados</strong> — o formulário oficial com seus consumos por escopo e as
+            áreas de fixação. A Carbona faz os cálculos e entrega o relatório completo: emissões por escopo e por fonte,
+            balanço com a fixação de carbono e recomendações priorizadas de redução.
           </p>
         </div>
 
-        <div class="calc-grid revelar">
-          <!-- COLUNA DE ENTRADAS -->
-          <div class="painel calc-entradas">
-            <!-- Os grupos por escopo e campos são gerados via JavaScript
-                 a partir de uma única fonte de dados (constante FONTES) -->
-            <form id="calc-form" aria-label="Dados de consumo para cálculo de emissões">
-              <div id="grupos-escopos"></div>
-            </form>
-
-            <!-- Nota sobre fatores de referência (sempre visível) -->
-            <div class="nota-fatores" role="note">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <circle cx="12" cy="12" r="10" /><line x1="12" y1="16" x2="12" y2="12" /><line x1="12" y1="8" x2="12.01" y2="8" />
-              </svg>
-              <p>
-                <strong>Fatores de referência.</strong> O relatório final usa fatores oficiais atualizados
-                (MCTI, GHG Protocol, IPCC) conforme o ano-base e a realidade da sua operação.
-              </p>
-            </div>
-
-            <!-- Seção editável de fatores de emissão -->
-            <details class="fatores">
-              <summary>
-                <span>
-                  Fatores de emissão
-                  <small style="display:block; font-weight:600; color:var(--cinza);">Ajuste os valores de referência, se quiser</small>
-                </span>
-                <svg class="seta" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <polyline points="6 9 12 15 18 9" />
-                </svg>
-              </summary>
-              <div class="fatores-corpo">
-                <!-- Linhas de fatores geradas via JavaScript -->
-                <div id="fatores-lista"></div>
-                <button type="button" id="btn-restaurar" class="btn btn-contorno btn-restaurar">
-                  Restaurar valores de referência
-                </button>
-              </div>
-            </details>
-          </div>
-
-          <!-- COLUNA DE RESULTADOS -->
-          <div class="painel calc-resultados" aria-live="polite">
-            <!-- Total -->
-            <div class="resultado-total">
-              <div class="numero"><span id="total-tco2e">0</span> <span>tCO₂e</span></div>
-              <div class="legenda">Emissões totais estimadas</div>
-              <div class="kg" id="total-kg">0 kg CO₂e</div>
-            </div>
-
-            <!-- Gráfico de pizza (donut) por escopo -->
-            <h3 class="grafico-titulo">Distribuição por escopo</h3>
-            <div class="donut-bloco">
-              <svg class="donut-svg" id="donut" viewBox="0 0 42 42" role="img" aria-label="Gráfico de distribuição de emissões por escopo"></svg>
-              <div class="donut-legenda" id="donut-legenda"></div>
-            </div>
-
-            <!-- Gráfico de barras por fonte -->
-            <h3 class="grafico-titulo">Emissões por fonte</h3>
-            <div class="barras" id="barras"></div>
-
-            <!-- Ações -->
-            <div class="calc-rodape">
-              <button type="button" id="btn-baixar" class="btn btn-amarelo btn-bloco">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" />
-                </svg>
-                Baixar resumo (.txt)
-              </button>
-              <p style="font-size:0.84rem; margin:0; text-align:center;">
-                As entradas ficam salvas neste navegador (localStorage) e funcionam offline.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Chamada: leva ao exemplo completo de relatório (dashboard) -->
         <div class="exemplo-cta revelar">
           <div class="ec-texto">
-            <h3>Isto é só uma amostra rápida</h3>
+            <h3>Comece pelo Kit de Coleta de Dados</h3>
             <p>
-              A calculadora dá uma estimativa inicial. Quando você envia todos os dados, entregamos o
-              relatório completo: dashboard com gráficos por escopo e por fonte, evolução no tempo,
-              balanço com a fixação de carbono e recomendações priorizadas de redução.
+              É rápido: dá para preencher online em poucos minutos (ou baixar a planilha para preencher com calma).
+              Quer ver antes como fica o resultado? Confira um exemplo de relatório completo.
             </p>
           </div>
-          <a href="exemplo-dashboard.html" class="btn btn-primario">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M3 3v18h18" /><rect x="7" y="11" width="3" height="6" /><rect x="12" y="7" width="3" height="10" /><rect x="17" y="9" width="3" height="8" />
-            </svg>
-            Ver exemplo de relatório
-          </a>
+          <div class="fd-acoes">
+            <a href="coleta-online.html" class="btn btn-primario">Preencher o Kit de Coleta</a>
+            <a href="exemplo-dashboard.html" class="btn btn-contorno">Ver exemplo de relatório</a>
+          </div>
         </div>
       </div>
     </section>
@@ -1925,7 +1864,7 @@
           <details class="faq">
             <summary>Em quanto tempo recebo o relatório?<span class="mais" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="6" x2="12" y2="18"/><line x1="6" y1="12" x2="18" y2="12"/></svg></span></summary>
             <div class="faq-resposta">
-              <p>Com os dados completos em mãos, o relatório inicial costuma ficar pronto em 2 a 4 semanas, dependendo da complexidade e da quantidade de fontes. A calculadora desta página já oferece uma estimativa imediata para você começar agora.</p>
+              <p>Com os dados completos em mãos, o relatório inicial costuma ficar pronto em 2 a 4 semanas, dependendo da complexidade e da quantidade de fontes.</p>
               <p style="margin-top:12px;"><span class="tag-promo">Promoção de lançamento</span> As <strong>primeiras cotações</strong> são entregues em <strong>menos de 24 horas</strong> — e, para os <strong>primeiros compradores</strong>, o <strong>relatório pode ficar pronto no mesmo dia</strong>. Solicite a sua pelo formulário e receba um retorno ainda hoje.</p>
             </div>
           </details>
@@ -1945,92 +1884,39 @@
     </section>
 
     <!-- =========================================================
-         CONTATO
+         SOLICITAR RELATÓRIO (leva direto ao formulário de coleta)
          ========================================================= -->
     <section id="contato" class="secao-alt" aria-labelledby="contato-titulo">
-      <div class="container contato-grid">
-        <div class="contato-info revelar">
-          <span class="eyebrow">Contato</span>
+      <div class="container">
+        <div class="secao-cabecalho revelar">
+          <span class="eyebrow">Comece agora</span>
           <h2 id="contato-titulo">Solicite seu relatório de carbono</h2>
-          <p>Conte um pouco sobre sua operação. Retornamos com os próximos passos e uma proposta sob medida.</p>
-          <ul class="lista-beneficios">
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-              Diagnóstico inicial sem compromisso
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-              Kit de coleta de dados padronizado
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-              Relatório em tCO₂e por escopo e por fonte
-            </li>
-          </ul>
+          <p>
+            Para receber sua <strong>cotação e o relatório</strong>, preencha o <strong>Kit de Coleta de Dados</strong> —
+            o formulário oficial com os consumos por escopo e as áreas de fixação. Dá para preencher online em poucos
+            minutos e é tudo o que precisamos para analisar sua operação e retornar rápido.
+          </p>
         </div>
 
-        <div class="painel revelar">
-          <!-- Mensagem de sucesso (exibida após envio simulado) -->
-          <div class="form-sucesso" id="form-sucesso" role="status">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>
-            <span id="form-sucesso-texto">Solicitação pronta! Abrimos seu aplicativo de e-mail com os dados preenchidos — é só clicar em enviar que a equipe da Carbona recebe e retorna em seguida.</span>
-          </div>
-
-          <!-- novalidate: usamos validação própria em JavaScript -->
-          <form id="contato-form" novalidate>
-            <div class="form-grid">
-              <div class="form-campo">
-                <label for="c-nome">Nome <span class="obrig" aria-hidden="true">*</span></label>
-                <input type="text" id="c-nome" name="nome" autocomplete="name" required aria-required="true" />
-                <span class="msg-erro" id="erro-nome" aria-live="polite"></span>
-              </div>
-              <div class="form-campo">
-                <label for="c-empresa">Empresa <span class="obrig" aria-hidden="true">*</span></label>
-                <input type="text" id="c-empresa" name="empresa" autocomplete="organization" required aria-required="true" />
-                <span class="msg-erro" id="erro-empresa" aria-live="polite"></span>
-              </div>
-              <div class="form-campo">
-                <label for="c-cnpj">CNPJ</label>
-                <input type="text" id="c-cnpj" name="cnpj" inputmode="numeric" autocomplete="off" placeholder="00.000.000/0000-00" maxlength="18" />
-                <span class="msg-erro" id="erro-cnpj" aria-live="polite"></span>
-              </div>
-              <div class="form-campo">
-                <label for="c-email">E-mail <span class="obrig" aria-hidden="true">*</span></label>
-                <input type="email" id="c-email" name="email" autocomplete="email" required aria-required="true" />
-                <span class="msg-erro" id="erro-email" aria-live="polite"></span>
-              </div>
-              <div class="form-campo">
-                <label for="c-segmento">Segmento <span class="obrig" aria-hidden="true">*</span></label>
-                <select id="c-segmento" name="segmento" required aria-required="true">
-                  <option value="">Selecione...</option>
-                  <option value="Indústria">Indústria</option>
-                  <option value="Serviços e Comércio">Serviços e Comércio</option>
-                  <option value="Propriedade Rural">Propriedade Rural</option>
-                  <option value="Transporte e Logística">Transporte e Logística</option>
-                  <option value="Construção">Construção</option>
-                  <option value="Setor Público">Setor Público</option>
-                  <option value="Outro">Outro</option>
-                </select>
-                <span class="msg-erro" id="erro-segmento" aria-live="polite"></span>
-              </div>
-              <div class="form-campo largura-total">
-                <label for="c-mensagem">Mensagem</label>
-                <textarea id="c-mensagem" name="mensagem" placeholder="Conte sobre sua operação, período e objetivo (opcional)."></textarea>
-                <span class="msg-erro" id="erro-mensagem" aria-live="polite"></span>
-              </div>
-              <div class="form-campo largura-total">
-                <label for="c-planilha">Planilha de coleta preenchida <span style="font-weight:500; color:var(--cinza);">(opcional — adianta a cotação)</span></label>
-                <input type="file" id="c-planilha" name="planilha" accept=".xlsx,.xls,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" />
-                <span class="dica-arquivo" id="dica-planilha">Anexe o <strong>Kit de Coleta</strong> preenchido para adiantar sua cotação — .xlsx, .xls ou .csv (até 10 MB). <a href="Kit-Coleta-Dados-Carbono.xlsx" download>Baixar o kit em branco</a> ou <a href="coleta-online.html">preencher online</a>.</span>
-                <span class="msg-erro" id="erro-planilha" aria-live="polite"></span>
-              </div>
-            </div>
-            <button type="submit" class="btn btn-primario btn-bloco" style="margin-top:18px;">Enviar solicitação</button>
-            <p style="font-size:0.82rem; margin:12px 0 0; text-align:center;">
-              
+        <div class="exemplo-cta revelar">
+          <div class="ec-texto">
+            <h3>Preencha o Kit de Coleta de Dados</h3>
+            <p>
+              Este é o único formulário que você precisa preencher para dar início ao relatório. Prefere ver antes como
+              fica o resultado? Confira um exemplo de relatório completo.
             </p>
-          </form>
+          </div>
+          <div class="fd-acoes">
+            <a href="coleta-online.html" class="btn btn-primario">Preencher o Kit de Coleta</a>
+            <a href="exemplo-dashboard.html" class="btn btn-contorno">Ver exemplo de relatório</a>
+          </div>
         </div>
+
+        <p style="text-align:center; margin:26px 0 0; color:var(--cinza); font-size:0.95rem;">
+          Ficou com dúvidas antes de preencher? Fale com a gente no
+          <a href="https://wa.me/5517981888118" target="_blank" rel="noopener">WhatsApp</a>
+          ou por e-mail em <a href="mailto:leonilsonk@gmail.com">leonilsonk@gmail.com</a>.
+        </p>
       </div>
     </section>
   </main>
@@ -2065,7 +1951,6 @@
           <ul>
             <li><a href="#problema">Problema</a></li>
             <li><a href="#solucao">Solução</a></li>
-            <li><a href="#calculadora">Calculadora</a></li>
             <li><a href="#segmentos">Segmentos</a></li>
             <li><a href="#faq">Perguntas frequentes</a></li>
           </ul>
@@ -2509,7 +2394,7 @@
               }
             });
           }, { rootMargin: "-45% 0px -50% 0px" });
-          ["problema", "solucao", "protocolo", "calculadora", "segmentos", "contato"].forEach(function (id) {
+          ["problema", "solucao", "protocolo", "segmentos", "contato"].forEach(function (id) {
             var el = document.getElementById(id);
             if (el) obs.observe(el);
           });
@@ -2537,26 +2422,6 @@
          12) INICIALIZAÇÃO
          ------------------------------------------------------- */
       function init() {
-        gerarCampos();
-        gerarFatores();
-
-        // Recalcula a cada digitação (tempo real)
-        document.getElementById("grupos-escopos").addEventListener("input", calcular);
-        document.getElementById("fatores-lista").addEventListener("input", calcular);
-
-        // Botões
-        document.getElementById("btn-baixar").addEventListener("click", baixarResumo);
-        document.getElementById("btn-restaurar").addEventListener("click", function () {
-          FONTES.forEach(function (f) {
-            var ft = document.getElementById("fat-" + f.id);
-            if (ft) ft.value = f.fatorRef;
-          });
-          calcular();
-        });
-
-        carregar();     // restaura entradas salvas
-        calcular();     // primeiro cálculo
-
         configurarFormulario();
         configurarNavegacao();
         configurarRevelar();
